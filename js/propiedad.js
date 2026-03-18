@@ -188,7 +188,8 @@ function renderNotFound(reason){
 function renderProp(p){
   // Título / meta
   $("#titulo").textContent = p.titulo || p.title || "(Sin título)";
-  $("#crumb-titulo").textContent = p.titulo || p.title || "Detalle";
+  const crumb = $("#crumb-titulo");
+  if (crumb) crumb.textContent = p.titulo || p.title || "Detalle";
   $("#meta").textContent = [
     p.tipo || p.category,
     p.barrio || p.zona,
