@@ -142,7 +142,7 @@ function mapTokkoToLocal(raw) {
     ambientes,
     dormitorios,
     banos,
-    imagenes
+    imagenes: extractFotos(p)
   };
 }
 

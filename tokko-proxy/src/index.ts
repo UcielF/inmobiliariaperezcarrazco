@@ -91,11 +91,16 @@ export default {
       const order_by = url.searchParams.get("order_by") || "price";
       const order = url.searchParams.get("order") || "desc";
 
-      // Búsqueda base (después la afinamos con tus filtros)
+      // operation_types: acepta "1", "2", "3" o "1,2" via query param
+      const opParam = url.searchParams.get("operation_types");
+      const operationTypes = opParam
+        ? opParam.split(",").map(Number).filter(n => n > 0 && n <= 3)
+        : [1, 2, 3];
+
       const data = {
         current_localization_id: 0,
         current_localization_type: "country",
-        operation_types: [1, 2, 3], // 1 venta, 2 alquiler, 3 temporal
+        operation_types: operationTypes, // 1 venta, 2 alquiler, 3 temporal
         property_types: Array.from({ length: 25 }, (_, i) => i + 1),
         price_from: 0,
         price_to: 999999999,

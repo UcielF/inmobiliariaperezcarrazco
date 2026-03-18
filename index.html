@@ -4,69 +4,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perez Carrasco · Inmobiliaria</title>
-  <meta name="description"
-    content="Perez Carrasco Inmobiliaria — ventas, alquileres y temporarios. Encontrá tu próxima propiedad.">
+  <title>Perez Carrazco · Inmobiliaria</title>
+  <meta name="description" content="Perez Carrazco Inmobiliaria — ventas, alquileres y temporarios en Mar del Plata.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-
-
   <link rel="stylesheet" href="css/styles.css" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 </head>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.subheader-toggle');
-    const panel = document.getElementById('subheader');
-    if (!btn || !panel) return;
-
-    const open = () => {
-      panel.classList.add('is-open');
-      panel.setAttribute('aria-hidden', 'false');
-      btn.setAttribute('aria-expanded', 'true');
-    };
-    const close = () => {
-      panel.classList.remove('is-open');
-      panel.setAttribute('aria-hidden', 'true');
-      btn.setAttribute('aria-expanded', 'false');
-    };
-
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      panel.classList.contains('is-open') ? close() : open();
-    });
-
-    document.addEventListener('click', (e) => {
-      const opened = document.querySelector('.has-submenu.open');
-      if (opened && !opened.contains(e.target)) {
-        opened.classList.remove('open');
-        opened.querySelector('.submenu-toggle')?.setAttribute('aria-expanded', 'false');
-      }
-    }, { passive: true });
-
-
-
-  });
-</script>
-
-
-
 <body>
-
 
   <!-- Header -->
   <header class="site-header">
     <div class="container header-grid">
       <div class="header-logo">
-        <a class="logo">
-          <img src="logoPC.png" alt="Perez Carrasco Inmobiliaria">
+        <a class="logo" href="index.html">
+          <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria">
         </a>
-
-        <!-- Flecha bajo el logo -->
         <button class="subheader-toggle" aria-controls="subheader" aria-expanded="false" aria-label="Abrir menú">
           <i class="fa-solid fa-chevron-down"></i>
         </button>
@@ -74,11 +29,10 @@
     </div>
   </header>
 
-  <!-- Sub-header (panel deslizante fijo) -->
+  <!-- Sub-header -->
   <nav id="subheader" class="sub-header" aria-hidden="true">
     <div class="container subheader-grid">
 
-      <!-- Menú izquierda -->
       <nav class="header-nav nav-left" aria-label="Menú principal - izquierda">
         <ul class="nav-list">
           <li><a href="#inicio">Buscar</a></li>
@@ -91,12 +45,11 @@
               <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
               <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
             </ul>
-          <li><a href="#destacadas">Destacadas</a></li>
           </li>
+          <li><a href="#disponibles">Destacadas</a></li>
         </ul>
       </nav>
 
-      <!-- Menú derecha -->
       <nav class="header-nav nav-right" aria-label="Menú principal - derecha">
         <ul class="nav-list">
           <li><a href="#quienes-somos">Quiénes somos</a></li>
@@ -106,9 +59,6 @@
 
     </div>
   </nav>
-
-
-
 
   <!-- Hero -->
   <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades">
@@ -132,132 +82,27 @@
           <option value="ph">PH</option>
           <option value="local">Local</option>
         </select>
-        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0"
-          aria-label="Precio mínimo">
-        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0"
-          aria-label="Precio máximo">
+        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0" aria-label="Precio mínimo">
+        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0" aria-label="Precio máximo">
         <button type="submit" class="btn">Buscar</button>
       </form>
     </div>
   </section>
 
-  <!-- Propiedades destacadas 
-  <section id="destacadas" class="section">
+  <!-- Propiedades disponibles -->
+  <section id="disponibles" class="section" style="padding: 40px 0">
     <div class="container">
       <div class="section-head">
-        <h2>Propiedades destacadas</h2>
-        <a href="#listado" class="ver-todo">Ver todas</a>
+        <h2>Propiedades disponibles</h2>
       </div>
-      <div id="gridDestacadas" class="grid-cards" aria-live="polite"></div>
+      <div id="grid-disponibles" class="disponibles"></div>
+      <div class="center mt-3">
+        <button id="ver-mas" class="btn">Ver más propiedades</button>
+      </div>
     </div>
-  </section>-->
-
-  <section id="disponibles" class="section" style="padding:40px">
-    <h2>Propiedades disponibles</h2>
-    <div id="grid-disponibles" class="disponibles"></div>
-    <div>
-      <h2></h2>
-      
-    </div>
-    <div class="center mt-3">
-  <button id="ver-mas" class="btn">Ver más propiedades</button>
-</div>
-
   </section>
 
-
-  <script>
-    const API = "https://tokko-proxy.tecno-serv00.workers.dev/property?page=1&limit=24";
-
-    function portada(p) {
-      return p?.cover_picture?.big
-        || p?.cover_picture?.thumb
-        || p?.photos?.[0]?.big
-        || p?.photos?.[0]?.thumb
-        || "https://via.placeholder.com/800x450?text=Propiedad";
-    }
-    function precio(p) {
-      if (!p?.web_price) return "Consultar";
-      const cur = (p.currency || "U$S");
-      return `${cur} ${Number(p.web_price).toLocaleString("es-AR")}`;
-    }
-    function meta(p) {
-      const parts = [];
-      if (p?.room_amount) parts.push(`${p.room_amount} amb.`);
-      if (p?.surface) parts.push(`${p.surface} m²`);
-      if (p?.bathroom_amount) parts.push(`${p.bathroom_amount} baño${p.bathroom_amount > 1 ? "s" : ""}`);
-      return parts.join(" • ");
-    }
-    function opBadge(p) {
-      // intenta deducir operación (1 venta, 2 alquiler, 3 temporario) si viene del API
-      const op = p?.operation_type || p?.operation_types?.[0];
-      if (op === 1) return `<span class="badge">Venta</span>`;
-      if (op === 2) return `<span class="badge">Alquiler</span>`;
-      if (op === 3) return `<span class="badge">Temporario</span>`;
-      return ""; // no mostrar si no está
-    }
-
-    function card(p) {
-      const id = p.id || p.property_id;
-      const img = portada(p);
-      const title = p.publication_title || p.address || "Propiedad";
-      const metaTxt = meta(p);
-      const priceTxt = precio(p);
-
-      return `
-    <article class="card">
-      <!-- si preferís tu wrapper .card-media, cambialo por:
-           <a href="propiedad.html?id=${id}" class="card-media"><img src="${img}" alt="${title}"></a> -->
-      <a href="propiedad.html?id=${id}">
-        <img src="${img}" alt="${title}" class="thumb" loading="lazy">
-      </a>
-
-      <div class="body">
-        <div class="mb-2">${opBadge(p)}</div>
-        <h3 class="title">${title}</h3>
-        <p class="meta">${metaTxt || "&nbsp;"}</p>
-        <p class="price">${priceTxt}</p>
-        <a href="propiedad.html?id=${id}" class="btn">Ver más</a>
-      </div>
-    </article>
-  `;
-    }
-
-    let page = 1;
-const limit = 9;
-
-async function cargarDisponibles(append = false) {
-  const grid = document.getElementById("grid-disponibles");
-  if (!append) grid.innerHTML = "<p>Cargando propiedades…</p>";
-  try {
-    const r = await fetch(`https://tokko-proxy.tecno-serv00.workers.dev/property?page=${page}&limit=${limit}`);
-    const data = await r.json();
-    const items = data.objects || data.results || [];
-    const html = items.map(card).join("");
-    if (append) {
-      grid.insertAdjacentHTML("beforeend", html);
-    } else {
-      grid.innerHTML = html || "<p>No hay propiedades.</p>";
-    }
-  } catch (e) {
-    console.error(e);
-    grid.innerHTML = "<p>Error al cargar propiedades.</p>";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  cargarDisponibles();
-  document.getElementById("ver-mas")?.addEventListener("click", () => {
-    page++;
-    cargarDisponibles(true);
-  });
-});
-  </script>
-
-  
-
-
-  <!-- Listado / Resultados -->
+  <!-- Resultados de búsqueda -->
   <section id="listado" class="section bg-muted">
     <div class="container">
       <div class="section-head">
@@ -273,9 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="container narrow">
       <h2>Quiénes somos</h2>
       <p>
-        Somos <strong>Perez Carrasco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y
-        transparente.
-        Acompañamos a nuestros clientes en cada paso del proceso para que encuentren el lugar ideal.
+        Somos <strong>Perez Carrazco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y
+        transparente. Acompañamos a nuestros clientes en cada paso del proceso para que encuentren el lugar ideal.
       </p>
     </div>
   </section>
@@ -284,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <section id="contacto" class="section">
     <div class="container narrow">
       <h2>Contacto</h2>
-      <p>Completá el formulario a continuación.</p>
+      <p>Completá el formulario y te respondemos a la brevedad.</p>
       <form class="form-contacto" onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
         <div class="row">
           <input type="text" placeholder="Nombre y apellido" required>
@@ -306,11 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="footer-left">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-regular fa-envelope"></i> <a
-              href="mailto:contacto@perezcarrasco.com">contacto@perezcarrasco.com</a></li>
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542235685409" target="_blank"
-              rel="noopener">WhatsApp</a></li>
-          <li><i class="fa-solid fa-location-dot"></i> Avenida siempre viva 123, Mar del Plata</li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542233048966" target="_blank" rel="noopener">+54 223 304-8966</a></li>
+          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> Mar del Plata, Buenos Aires</li>
         </ul>
         <div class="socials">
           <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -318,15 +160,15 @@ document.addEventListener("DOMContentLoaded", () => {
           <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </div>
       </div>
-      <div class="footer-center">
-
-      </div>
+      <div class="footer-center"></div>
       <div class="footer-right"></div>
     </div>
     <div class="container">
-      <p class="copy">© <span id="anio"></span> Perez Carrasco. Todos los derechos reservados.</p>
+      <p class="copy">© <span id="anio"></span> Perez Carrazco. Todos los derechos reservados.</p>
     </div>
   </footer>
 
   <script src="js/app.js"></script>
+
 </body>
+</html>

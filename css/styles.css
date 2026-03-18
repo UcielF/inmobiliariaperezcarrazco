@@ -465,6 +465,8 @@ a.btn {
    Utils
    ======================= */
 .muted { color: #667085; }
+.center { text-align: center; }
+.mt-3 { margin-top: 2rem; }
 
 /* =======================
    Responsive
