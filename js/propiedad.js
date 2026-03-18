@@ -44,18 +44,12 @@ function mapTokkoToLocal(raw) {
     [p.street, p.street_number, p.city].filter(Boolean).join(" ") ||
     "Propiedad";
 
-  // Operación y precio
-  const operacion =
-    p.operation ||
-    p.operation_type ||
-    (p.operations?.[0]?.operation_type) ||
-    "";
+  // Operación y precio (estructura real Tokko: operations[0].prices[0])
+  const operacion = p.operations?.[0]?.operation_type || "";
 
-  const moneda = (p.operations?.[0]?.currency || p.currency || "U$S").trim();
-  const precio =
-    p.operations?.[0]?.price ??
-    p.price ??
-    null;
+  const _price = p.operations?.[0]?.prices?.[0];
+  const moneda = (_price?.currency || "U$S").trim();
+  const precio = _price?.price ?? null;
 
   // Imágenes
   function extractFotos(pub){
@@ -108,16 +102,17 @@ function mapTokkoToLocal(raw) {
 
 
   // Campos varios
-  const tipo = p.type || p.property_type || p.category || "";
+  const tipo = p.property_type?.name || p.type || p.category || "";
   const barrio = p.neighborhood || p.area || p.barrio || "";
   const direccion =
     p.address || [p.street, p.street_number].filter(Boolean).join(" ") || "";
   const superficie =
-    p.surface || p.total_surface || p.surface_total || p.surface_covered || null;
+    parseFloat(p.roofed_surface) || parseFloat(p.total_surface) ||
+    parseFloat(p.surface_covered) || null;
 
-  const ambientes = p.rooms ?? p.environment_quantity ?? p.ambientes ?? null;
-  const dormitorios = p.bedrooms ?? p.dormitorios ?? null;
-  const banos = p.bathrooms ?? p.bathrooms_quantity ?? p.banos ?? p["baños"] ?? null;
+  const ambientes = p.room_amount ?? p.rooms ?? p.environment_quantity ?? null;
+  const dormitorios = p.suite_amount ?? p.bedrooms ?? null;
+  const banos = p.bathroom_amount ?? p.bathrooms ?? null;
 
   const amenities = []
     .concat(p.amenities || [])

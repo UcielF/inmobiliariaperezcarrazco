@@ -27,30 +27,30 @@ function escHtml(s = "") {
 }
 
 function portada(p) {
-  return p?.cover_picture?.big
-    || p?.cover_picture?.thumb
-    || p?.photos?.[0]?.big
-    || p?.photos?.[0]?.thumb
+  const front = p?.photos?.find(ph => ph.is_front_cover);
+  return front?.image
+    || p?.photos?.[0]?.image
     || "https://placehold.co/800x450?text=Sin+imagen";
 }
 
 function fmtPrecio(p) {
-  if (!p?.web_price) return "Consultar";
-  return `${p.currency || "U$S"} ${Number(p.web_price).toLocaleString("es-AR")}`;
+  const price = p?.operations?.[0]?.prices?.[0];
+  if (!price?.price) return "Consultar";
+  return `${price.currency || "U$S"} ${Number(price.price).toLocaleString("es-AR")}`;
 }
 
 function metaTexto(p) {
+  const sup = parseFloat(p?.roofed_surface) || parseFloat(p?.total_surface) || null;
   return [
     p?.room_amount     && `${p.room_amount} amb.`,
-    p?.surface         && `${p.surface} m²`,
+    sup                && `${sup} m²`,
     p?.bathroom_amount && `${p.bathroom_amount} baño${p.bathroom_amount > 1 ? "s" : ""}`
   ].filter(Boolean).join(" • ");
 }
 
 function opBadge(p) {
-  const op    = p?.operation_type ?? p?.operation_types?.[0];
-  const label = OP_LABEL[op];
-  return label ? `<span class="badge">${label}</span>` : "";
+  const opType = p?.operations?.[0]?.operation_type;
+  return opType ? `<span class="badge">${opType}</span>` : "";
 }
 
 function cardHtml(p) {
@@ -130,8 +130,8 @@ function aplicarFiltros() {
 
   return state.props.filter(p => {
     if (opId) {
-      const pOp = p.operation_type ?? p.operation_types?.[0];
-      if (pOp !== opId) return false;
+      const pOpId = p?.operations?.[0]?.operation_id;
+      if (pOpId !== opId) return false;
     }
     if (tipo) {
       const pTipo = (p.property_type?.name || p.type || "").toLowerCase();
