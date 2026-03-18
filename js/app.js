@@ -60,15 +60,17 @@ function cardHtml(p) {
 
   return `
     <article class="card">
-      <a href="${ROOT}propiedad.html?id=${id}">
-        <img src="${img}" alt="${title}" class="thumb" loading="lazy">
+      <a href="${ROOT}propiedad.html?id=${id}" class="card-img-wrap">
+        <img src="${img}" alt="${title}" class="card-img" loading="lazy">
+        <div class="card-price-overlay">
+          <span class="card-price">${fmtPrecio(p)}</span>
+        </div>
+        ${opBadge(p)}
       </a>
-      <div class="body">
-        <div class="mb-2">${opBadge(p)}</div>
-        <h3 class="title">${title}</h3>
-        <p class="meta">${metaTexto(p) || "&nbsp;"}</p>
-        <p class="price">${fmtPrecio(p)}</p>
-        <a href="${ROOT}propiedad.html?id=${id}" class="btn">Ver más</a>
+      <div class="card-body">
+        <h3 class="card-title">${title}</h3>
+        <p class="card-meta">${metaTexto(p) || "&nbsp;"}</p>
+        <a href="${ROOT}propiedad.html?id=${id}" class="btn-outline">Ver propiedad →</a>
       </div>
     </article>`;
 }
@@ -170,30 +172,27 @@ function renderResultados(lista) {
 
 // ── Navegación: subheader + submenús ─────────────────────────────────────────
 
-function initSubheader() {
-  const panel  = document.getElementById("subheader");
-  const toggle = document.querySelector(".subheader-toggle");
-  const logo   = document.querySelector(".header-logo");
-  if (!panel) return;
+function initNav() {
+  const toggle   = document.querySelector('.nav-toggle');
+  const mobileNav = document.getElementById('nav-mobile');
 
-  function setOpen(open) {
-    panel.classList.toggle("is-open", open);
-    toggle?.setAttribute("aria-expanded", open ? "true" : "false");
-  }
+  if (!toggle || !mobileNav) return;
 
-  toggle?.addEventListener("click", e => {
-    e.preventDefault();
-    setOpen(!panel.classList.contains("is-open"));
+  toggle.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
+    toggle.querySelector('i').className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
   });
 
-  logo?.addEventListener("click", e => {
-    e.preventDefault();
-    setOpen(!panel.classList.contains("is-open"));
-  });
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") setOpen(false);
-  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-toggle') && !e.target.closest('#nav-mobile')) {
+      mobileNav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      toggle.querySelector('i').className = 'fa-solid fa-bars';
+    }
+  }, { passive: true });
 }
 
 function initSubmenus() {
@@ -224,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const anioEl = document.getElementById("anio");
   if (anioEl) anioEl.textContent = new Date().getFullYear();
 
-  initSubheader();
+  initNav();
   initSubmenus();
 
   const grid = document.getElementById("grid-disponibles");

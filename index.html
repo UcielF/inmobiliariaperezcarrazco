@@ -17,48 +17,42 @@
 
   <!-- Header -->
   <header class="site-header">
-    <div class="container header-grid">
-      <div class="header-logo">
-        <a class="logo" href="index.html">
-          <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria">
-        </a>
-        <button class="subheader-toggle" aria-controls="subheader" aria-expanded="false" aria-label="Abrir menú">
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Sub-header -->
-  <nav id="subheader" class="sub-header" aria-hidden="true">
-    <div class="container subheader-grid">
-
-      <nav class="header-nav nav-left" aria-label="Menú principal - izquierda">
+    <div class="container nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
+      </a>
+      <nav class="nav-desktop" aria-label="Menú principal">
         <ul class="nav-list">
           <li><a href="#inicio">Buscar</a></li>
           <li class="has-submenu">
-            <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            <button class="submenu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
               Servicios <i class="fa-solid fa-chevron-down"></i>
             </button>
-            <ul class="submenu" aria-label="submenu servicios">
+            <ul class="submenu">
               <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
               <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
               <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
             </ul>
           </li>
-          <li><a href="#disponibles">Destacadas</a></li>
-        </ul>
-      </nav>
-
-      <nav class="header-nav nav-right" aria-label="Menú principal - derecha">
-        <ul class="nav-list">
           <li><a href="#quienes-somos">Quiénes somos</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
-
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
-  </nav>
+    <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
+      <ul>
+        <li><a href="#inicio">Buscar</a></li>
+        <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
+        <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
+        <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+        <li><a href="#quienes-somos">Quiénes somos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero -->
   <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades">

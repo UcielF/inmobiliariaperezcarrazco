@@ -14,125 +14,47 @@
   <meta property="og:image" content="img/cover.jpg" />
 
   <link rel="stylesheet" href="css/styles.css">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.subheader-toggle');
-    const panel = document.getElementById('subheader');
-    if (!btn || !panel) return;
-
-    const open = () => {
-      panel.classList.add('is-open');
-      panel.setAttribute('aria-hidden', 'false');
-      btn.setAttribute('aria-expanded', 'true');
-    };
-    const close = () => {
-      panel.classList.remove('is-open');
-      panel.setAttribute('aria-hidden', 'true');
-      btn.setAttribute('aria-expanded', 'false');
-    };
-
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      panel.classList.contains('is-open') ? close() : open();
-    });
-
-    document.addEventListener('click', (e) => {
-      const opened = document.querySelector('.has-submenu.open');
-      if (opened && !opened.contains(e.target)) {
-        opened.classList.remove('open');
-        opened.querySelector('.submenu-toggle')?.setAttribute('aria-expanded', 'false');
-      }
-    }, { passive: true });
-
-
-
-  });
-</script>
-
-<!--<script type="module">
-  import { PROXY } from './js/config.js';
-
-  const $out = document.querySelector('#detalle'); // crea un contenedor con este id
-  const id = new URLSearchParams(location.search).get('id');
-
-  if (!id) {
-    $out.textContent = 'Falta el parámetro ?id=';
-  } else {
-    const url = `${PROXY}/property?${new URLSearchParams({ id })}`;
-    fetch(url)
-      .then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`))
-      .then(data => {
-        const p = data.objects?.[0] ?? data; // por si el proxy envía {objects:[]}
-        if (!p) throw new Error('Propiedad no encontrada');
-
-        // Render mínimo (ajustá a tu layout):
-        $out.innerHTML = `
-          <h1>${p.title ?? p.publication_title ?? p.address ?? 'Propiedad'}</h1>
-          <p><strong>ID:</strong> ${p.id ?? p.property_id ?? '(s/d)'}</p>
-        `;
-      })
-      .catch(err => {
-        console.error(err);
-        $out.textContent = 'No se encontró la propiedad.';
-      });
-  }
-</script>-->
-
 
 <body>
 
-
   <!-- Header -->
   <header class="site-header">
-    <div class="container header-grid">
-      <div class="header-logo">
-        <a class="logo">
-          <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria">
-        </a>
-
-        <!-- Flecha bajo el logo -->
-        <button class="subheader-toggle" aria-controls="subheader" aria-expanded="false" aria-label="Abrir menú">
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Sub-header (panel deslizante fijo) -->
-  <nav id="subheader" class="sub-header" aria-hidden="true">
-    <div class="container subheader-grid">
-
-      <!-- Menú izquierda -->
-      <nav class="header-nav nav-left" aria-label="Menú principal - izquierda">
+    <div class="container nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
+      </a>
+      <nav class="nav-desktop" aria-label="Menú principal">
         <ul class="nav-list">
-          <li><a href="#inicio">Buscar</a></li>
+          <li><a href="index.html">Home</a></li>
           <li class="has-submenu">
-            <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            <button class="submenu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
               Servicios <i class="fa-solid fa-chevron-down"></i>
             </button>
-            <ul class="submenu" aria-label="submenu servicios">
+            <ul class="submenu">
               <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
               <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
               <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
             </ul>
-          <li><a href="#destacadas">Destacadas</a></li>
           </li>
-        </ul>
-      </nav>
-
-      <!-- Menú derecha -->
-      <nav class="header-nav nav-right" aria-label="Menú principal - derecha">
-        <ul class="nav-list">
-          <li><a href="#quienes-somos">Quiénes somos</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
-
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
-  </nav>
+    <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
+        <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
+        <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
 
   <main id="propiedad" class="container">
