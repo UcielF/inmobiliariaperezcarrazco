@@ -10,13 +10,6 @@ const PROXY = "https://tokko-proxy.tecno-serv00.workers.dev";
 // SI USÁS JSON:
 const DATA_URL = "data/propiedades.json"; // <-- ajustá ruta real si hace falta
 
-/**********************
- * TOKKO (CONFIG + FETCH + MAP)
- **********************/
-const TOKKO_API_KEY = "badb8dc018766247dae1fd1416a428b993ee1bc1"; // <— reemplazá
-const TOKKO_BASE = "https://api.tokkobroker.com";
-
-
 
 async function fetchTokkoById(id) {
   const url = `${PROXY}/property?id=${encodeURIComponent(id)}&ts=${Date.now()}`;
