@@ -84,12 +84,12 @@ export default {
       });
     }
 
-    // Listado: /property?page=1&limit=12&order_by=price&order=desc
+    // Listado: /property?page=1&limit=50
+    // Destacadas: /property?featured=1&limit=6  (filtra server-side por is_starred_on_web)
     if (path.startsWith("/property")) {
+      const featured = url.searchParams.get("featured") === "1";
       const page = url.searchParams.get("page") || "1";
-      const limit = url.searchParams.get("limit") || "12";
-      const order_by = url.searchParams.get("order_by") || "price";
-      const order = url.searchParams.get("order") || "desc";
+      const limit = parseInt(url.searchParams.get("limit") || "12", 10);
 
       // operation_types: acepta "1", "2", "3" o "1,2" via query param
       const opParam = url.searchParams.get("operation_types");
@@ -100,7 +100,7 @@ export default {
       const data = {
         current_localization_id: 0,
         current_localization_type: "country",
-        operation_types: operationTypes, // 1 venta, 2 alquiler, 3 temporal
+        operation_types: operationTypes,
         property_types: Array.from({ length: 25 }, (_, i) => i + 1),
         price_from: 0,
         price_to: 999999999,
@@ -108,14 +108,24 @@ export default {
         filters: [],
       };
 
-      // ...mantené todo igual arriba (data, page, limit, etc.)
-const base =
-  `https://www.tokkobroker.com/api/v1/property/?format=json` +
-  `&key=${env.TOKKO_KEY}&lang=${lang}` +
-  `&limit=${limit}&page=${page}` +  // 👈 sin order_by/order
-  `&data=${encodeURIComponent(JSON.stringify(data))}`;
+      // Para destacadas traemos todas y filtramos server-side
+      const fetchLimit = featured ? 100 : limit;
+      const base =
+        `https://www.tokkobroker.com/api/v1/property/?format=json` +
+        `&key=${env.TOKKO_KEY}&lang=${lang}` +
+        `&limit=${fetchLimit}&page=${page}` +
+        `&data=${encodeURIComponent(JSON.stringify(data))}`;
 
-const r = await fetch(base, { headers: { accept: "application/json" } });
+      const r = await fetch(base, { headers: { accept: "application/json" } });
+
+      if (featured) {
+        const payload = await r.json() as { objects?: unknown[]; results?: unknown[] };
+        const all: unknown[] = payload.objects || payload.results || [];
+        const starred = (all as Array<Record<string, unknown>>)
+          .filter(p => p.is_starred_on_web === true)
+          .slice(0, limit);
+        return json({ objects: starred }, r.status, { "cache-control": "max-age=120" });
+      }
 
       const body = await r.text();
       return new Response(body, {

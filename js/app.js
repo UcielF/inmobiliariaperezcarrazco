@@ -11,7 +11,7 @@ const ROOT     = window.ROOT_PATH || "";
 const state = {
   props:   [],
   page:    1,
-  limit:   9,
+  limit:   50,
   loading: false,
   opType:  null   // null = todos | 1 = venta | 2 = alquiler | 3 = temporario
 };
@@ -86,6 +86,27 @@ async function fetchProps(page = 1, limit = 9, opType = null) {
   return data.objects || data.results || [];
 }
 
+// ── Propiedades destacadas ────────────────────────────────────────────────────
+
+async function cargarDestacadas() {
+  const grid = document.getElementById("grid-destacadas");
+  if (!grid) return;
+
+  grid.innerHTML = "<p>Cargando…</p>";
+  try {
+    const r = await fetch(`${PROXY}/property?featured=1&limit=6`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    const items = data.objects || data.results || [];
+    grid.innerHTML = items.length
+      ? items.map(cardHtml).join("")
+      : "<p>No hay propiedades destacadas en este momento.</p>";
+  } catch (e) {
+    console.error("[app] Error al cargar destacadas:", e);
+    grid.innerHTML = "";
+  }
+}
+
 // ── Render grilla principal ───────────────────────────────────────────────────
 
 async function cargarDisponibles(append = false) {
@@ -102,7 +123,7 @@ async function cargarDisponibles(append = false) {
 
     // Filtro client-side como respaldo si el Worker no filtra por operación
     if (state.opType) {
-      items = items.filter(p => p?.operations?.[0]?.operation_id === state.opType);
+      items = items.filter(p => Number(p?.operations?.[0]?.operation_id) === state.opType);
     }
 
     state.props.push(...items);
@@ -125,6 +146,8 @@ async function cargarDisponibles(append = false) {
     state.loading = false;
   }
 }
+
+
 
 // ── Búsqueda (client-side sobre props ya cargadas) ────────────────────────────
 
@@ -239,6 +262,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initStickyHeader();
   initNav();
   initSubmenus();
+
+  cargarDestacadas();
 
   const grid = document.getElementById("grid-disponibles");
   if (grid) {

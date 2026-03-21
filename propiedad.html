@@ -4,9 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Propiedad | Inmobiliaria</title>
+  <title>Propiedad | Perez Carrazco Inmobiliaria</title>
 
-  <!-- SEO / Open Graph básicos: se reemplazan dinámicamente desde JS -->
   <meta name="description" content="Detalle de propiedad" />
   <meta property="og:title" content="Propiedad" />
   <meta property="og:description" content="Detalle de propiedad" />
@@ -16,30 +15,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data/img/logoblanco.png" type="image/png">
+
+  <!-- CSS global -->
   <link rel="stylesheet" href="css/styles.css">
+  <!-- CSS exclusivo de esta página -->
+  <link rel="stylesheet" href="css/propiedad.css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
-  <!-- Header -->
+  <!-- ==================== HEADER ==================== -->
   <header class="site-header">
     <div class="container nav-container">
       <a href="index.html" class="logo-link">
-        <img src="logoPC.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
+        <img src="data/img/logoblanco.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
       </a>
       <nav class="nav-desktop" aria-label="Menú principal">
         <ul class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li class="has-submenu">
-            <button class="submenu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-              Servicios <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            <ul class="submenu">
-              <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
-              <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
-              <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
-            </ul>
+          <li><a href="index.html">volver</a></li>
+          
           </li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -51,116 +48,151 @@
     <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
-        <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
-        <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+        <li><a href="servicios/ventas/ventas.html">Venta</a></li>
+        <li><a href="servicios/alquileres/alquileres.html">Alquiler</a></li>
+      
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
   </header>
 
 
-  <main id="propiedad" class="container">
-    <article class="layout">
-      <!-- Galería -->
-      <section class="galeria" aria-label="Galería de imágenes">
-        <div class="galeria-principal">
-          <button class="ctrl prev" aria-label="Imagen anterior">‹</button>
-          <img id="img-principal" src="" alt="" loading="eager" />
-          <button class="ctrl next" aria-label="Imagen siguiente">›</button>
-        </div>
-        <div class="thumbs" id="thumbs"></div>
-      </section>
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main id="propiedad">
+    <div class="prop-wrapper">
+      <article class="prop-layout">
 
-      <!-- Info principal -->
-      <section class="info">
-        <h1 id="titulo">Título de la propiedad</h1>
-        <p class="meta" id="meta">Tipo • Barrio • Dirección • Superficie</p>
+        <!-- ——— COLUMNA IZQUIERDA: galería + datos ——— -->
+        <div class="prop-main">
 
-        <div class="precio-op">
-          <span class="op-badge" id="operacion">venta</span>
-          <span class="precio" id="precio">U$S 000.000</span>
-        </div>
+          <!-- Galería -->
+          <div class="galeria-wrap">
+            <div class="galeria-principal" aria-label="Galería de imágenes">
+              <!-- Badge de estado (JS lo setea dinámicamente si hace falta) -->
+              <span class="prop-status-badge disponible" id="status-badge">Disponible</span>
 
-        <ul class="amenities" id="amenities">
-          <!-- badges de features -->
-        </ul>
+              <button class="ctrl prev" aria-label="Imagen anterior">&#8249;</button>
+              <img id="img-principal" src="" alt="" loading="eager" />
+              <button class="ctrl next" aria-label="Imagen siguiente">&#8250;</button>
 
-        <div class="descripcion">
-          <h2>Descripción</h2>
-          <p id="descripcion"></p>
-        </div>
-
-        <div class="caracteristicas">
-          <h2>Características</h2>
-          <ul id="caracteristicas-list">
-            <!-- li dinámicos -->
-          </ul>
-        </div>
-
-        <div class="acciones">
-          <a id="btn-whatsapp" class="btn primary" target="_blank" rel="noopener">Consultar por WhatsApp</a>
-          <a id="btn-email" class="btn" href="#">Enviar consulta</a>
-          <button id="btn-compartir" class="btn">Compartir</button>
-        </div>
-
-        <!-- JSON-LD SEO -->
-        <script id="ld-json" type="application/ld+json">{}</script>
-      </section>
-
-      <!-- Aside fijo -->
-      <aside class="sidebar">
-        <div class="card sticky">
-          <div class="precio-lg" id="precio-lg">U$S 000.000</div>
-          <div class="datos-rapidos" id="datos-rapidos">
-            <!-- m2, ambientes, dormitorios, baños -->
+              <!-- Contador: "3 / 8" -->
+              <div class="galeria-contador" id="galeria-contador">1 / 1</div>
+            </div>
+            <div class="thumbs" id="thumbs"></div>
           </div>
-          <a id="btn-whatsapp-side" class="btn primary" target="_blank" rel="noopener">Consultar ahora</a>
-          <p class="id-ref">ID: <span id="id-ref"></span></p>
-        </div>
 
-        <div class="card">
-          <h3>Ubicación</h3>
-          <p id="direccion"></p>
-          <!-- Si querés, podés incrustar un mapa estático más adelante -->
-        </div>
-      </aside>
-    </article>
+          <!-- Info principal -->
+          <div class="prop-info">
+            <h1 id="titulo">Cargando…</h1>
+            <p class="meta" id="meta">
+              <i class="fa-solid fa-location-dot"></i>
+              <span id="meta-texto">Tipo · Barrio · Dirección</span>
+            </p>
 
-    <section class="relacionadas">
-      <h2>Propiedades relacionadas</h2>
-      <div id="relacionadas-grid" class="grid-cards"></div>
-    </section>
+            <div class="precio-op">
+              <span class="op-badge" id="operacion">venta</span>
+              <span class="precio" id="precio">U$S —</span>
+            </div>
+
+            <ul class="amenities" id="amenities">
+              <!-- badges dinámicos desde JS -->
+            </ul>
+
+            <div class="acciones">
+              <a id="btn-whatsapp" class="btn primary" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
+              </a>
+              <a id="btn-email" class="btn btn-email" href="#contacto">
+                <i class="fa-regular fa-envelope"></i> Enviar consulta
+              </a>
+              <button id="btn-compartir" class="btn btn-compartir">
+                <i class="fa-solid fa-share-nodes"></i> Compartir
+              </button>
+            </div>
+
+            <!-- JSON-LD SEO (oculto) -->
+            <script id="ld-json" type="application/ld+json">{}</script>
+          </div>
+
+          <!-- Descripción -->
+          <div class="prop-descripcion">
+            <p class="prop-section-label">Descripción</p>
+            <p id="descripcion">—</p>
+          </div>
+
+          <!-- Características -->
+          <div class="prop-caracteristicas">
+            <p class="prop-section-label">Características</p>
+            <ul id="caracteristicas-list">
+              <!-- li dinámicos desde JS -->
+            </ul>
+          </div>
+
+        </div><!-- /prop-main -->
+
+
+        <!-- ——— SIDEBAR ——— -->
+        <aside class="sidebar">
+
+          <!-- Card precio + CTA -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-header">
+              <div class="precio-lg-label">Precio</div>
+              <div class="precio-lg" id="precio-lg">U$S —</div>
+            </div>
+            <div class="sidebar-card-body">
+              <div class="datos-rapidos" id="datos-rapidos">
+                <!-- items dinámicos -->
+              </div>
+              <div class="sidebar-cta">
+                <a id="btn-whatsapp-side" class="btn primary" target="_blank" rel="noopener">
+                  <i class="fa-brands fa-whatsapp"></i> Consultar ahora
+                </a>
+                <a class="btn btn-email" href="#contacto">
+                  <i class="fa-regular fa-envelope"></i> Escribir al agente
+                </a>
+              </div>
+              <p class="id-ref">Ref: <strong id="id-ref">—</strong></p>
+            </div>
+          </div>
+
+          <!-- Card ubicación -->
+          <div class="sidebar-card-ubicacion">
+            <h3><i class="fa-solid fa-location-dot"></i> Ubicación</h3>
+            <p id="direccion">—</p>
+            <div class="mapa-placeholder">
+              <i class="fa-solid fa-map"></i> Ver en mapa
+            </div>
+          </div>
+
+        </aside>
+
+      </article>
+
+      <!-- Propiedades relacionadas -->
+      <section class="relacionadas">
+        <h2>Propiedades relacionadas</h2>
+        <div id="relacionadas-grid" class="grid-cards"></div>
+      </section>
+    </div>
   </main>
 
-  <!-- Contacto -->
-  <section id="contacto" class="section">
-    <div class="container narrow">
-      <h2>Contacto</h2>
-      <p>Completá el formulario a continuación.</p>
-      <form class="form-contacto" onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
-        <div class="row">
-          <input type="text" placeholder="Nombre y apellido" required>
-          <input type="email" placeholder="Email" required>
-        </div>
-        <div class="row">
-          <input type="tel" placeholder="Teléfono">
-          <input type="text" placeholder="Asunto">
-        </div>
-        <textarea rows="4" placeholder="Mensaje"></textarea>
-        <button class="btn" type="submit">Enviar</button>
-      </form>
-    </div>
-  </section>
 
-  <!-- Footer -->
+
+
+
+  <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-left">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542233048966" target="_blank" rel="noopener">+54 223 304-8966</a></li>
-          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i>
+            <a href="https://wa.me/542233048966" target="_blank" rel="noopener">+54 223 304-8966</a>
+          </li>
+          <li><i class="fa-regular fa-envelope"></i>
+            <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a>
+          </li>
           <li><i class="fa-solid fa-location-dot"></i> Mar del Plata, Buenos Aires</li>
         </ul>
         <div class="socials">
@@ -169,9 +201,7 @@
           <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </div>
       </div>
-      <div class="footer-center">
-
-      </div>
+      <div class="footer-center"></div>
       <div class="footer-right"></div>
     </div>
     <div class="container">
@@ -180,7 +210,6 @@
   </footer>
 
   <script src="js/propiedad.js" defer></script>
-  
 
 </body>
 

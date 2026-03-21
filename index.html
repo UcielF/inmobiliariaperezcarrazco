@@ -5,16 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perez Carrazco · Inmobiliaria</title>
-  <meta name="description" content="Perez Carrazco Inmobiliaria — ventas, alquileres y temporarios en Mar del Plata.">
+  <meta name="description" content="Asesoramiento inmobiliario de confianza en Mar del Plata. Compra, venta y alquiler de propiedades.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="logoPC.png" type="image/png">
+  <link rel="icon" href="data/img/logoblanco.png" type="image/png">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
+
+
 
   <!-- Header -->
   <header class="site-header">
@@ -30,9 +32,9 @@
               Servicios <i class="fa-solid fa-chevron-down"></i>
             </button>
             <ul class="submenu">
-              <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
-              <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
-              <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+              <li><a href="servicios/venta/venta.html">Venta</a></li>
+              <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
+             
             </ul>
           </li>
           <li><a href="#quienes-somos">Quiénes somos</a></li>
@@ -46,9 +48,9 @@
     <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
       <ul>
         <li><a href="#inicio">Buscar</a></li>
-        <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
-        <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
-        <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+        <li><a href="servicios/venta/venta.html">Venta</a></li>
+        <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
+       
         <li><a href="#quienes-somos">Quiénes somos</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -59,8 +61,8 @@
   <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>Tu hogar, nuestra búsqueda</h1>
-      <p>Ventas · Alquileres · Temporarios</p>
+     <h1>De la búsqueda<br>a la mejor inversión</h1>
+    <p>Asesoramiento inmobiliario de confianza</p>
 
       <form id="buscador" class="search-form" autocomplete="off">
         <input type="text" id="q" name="q" placeholder="Barrio, calle o palabra clave…" aria-label="Buscar por texto">
@@ -68,7 +70,7 @@
           <option value="">Operación</option>
           <option value="venta">Venta</option>
           <option value="alquiler">Alquiler</option>
-          <option value="temporario">Temporario</option>
+          
         </select>
         <select id="tipo" name="tipo" aria-label="Tipo de propiedad">
           <option value="">Tipo</option>
@@ -84,7 +86,17 @@
     </div>
   </section>
 
-  <!-- Propiedades disponibles 
+  <!-- Propiedades destacadas -->
+  <section id="destacadas" class="section bg-muted" style="padding: 40px 0">
+    <div class="container">
+      <div class="section-head">
+        <h2>Propiedades destacadas</h2>
+      </div>
+      <div id="grid-destacadas" class="disponibles"></div>
+    </div>
+  </section>
+
+  <!-- Propiedades disponibles -->
   <section id="disponibles" class="section" style="padding: 40px 0">
     <div class="container">
       <div class="section-head">
@@ -95,7 +107,7 @@
         <button id="ver-mas" class="btn">Ver más propiedades</button>
       </div>
     </div>
-  </section> -->
+  </section>
 
   <!-- Resultados de búsqueda -->
   <section id="listado" class="section bg-muted">
@@ -164,8 +176,6 @@
   </footer>
 
   <script src="js/app.js"></script>
-
-  <div class="nav-overlay" id="navOverlay"></div>
 
 </body>
 </html>

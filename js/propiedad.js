@@ -189,14 +189,35 @@ function renderNotFound(reason){
 function renderProp(p){
   // Título / meta
   $("#titulo").textContent = p.titulo || p.title || "(Sin título)";
-  const crumb = $("#crumb-titulo");
+
+  // Breadcrumb
+  const crumb = $("#breadcrumb-titulo");
   if (crumb) crumb.textContent = p.titulo || p.title || "Detalle";
-  $("#meta").textContent = [
+  const crumbOper = $("#breadcrumb-operacion");
+  if (crumbOper) crumbOper.textContent = p.operacion || p.oper || "Propiedades";
+
+  // Meta texto (solo el span, para no borrar el ícono)
+  const metaTexto = [
     p.tipo || p.category,
     p.barrio || p.zona,
     p.direccion || p.direc || p.address,
     p.superficie ? `${p.superficie} m²` : null
   ].filter(Boolean).join(" • ");
+  const metaSpan = $("#meta-texto");
+  if (metaSpan) metaSpan.textContent = metaTexto;
+
+  // Hero section
+  const heroTitulo = $("#hero-titulo");
+  if (heroTitulo) heroTitulo.textContent = p.titulo || p.title || "(Sin título)";
+  const heroDireccion = $("#hero-direccion");
+  if (heroDireccion) heroDireccion.textContent = p.direccion || p.address || "—";
+  const heroPrecio = $("#hero-precio");
+  if (heroPrecio) heroPrecio.textContent = p.precio ? `${(p.moneda || "U$S").trim()} ${fmtPrecio(p.precio)}` : "Consultar";
+  const heroImg = $("#hero-img");
+  if (heroImg) {
+    const primera = (p.imagenes || p.images || [])[0];
+    if (primera) { heroImg.src = primera; heroImg.alt = p.titulo || p.title || ""; }
+  }
 
   // Operación / precio
   const oper = p.operacion || p.oper || p.operation || "";
@@ -292,12 +313,14 @@ function renderGaleria(imgs){
   }
 
   let idx = 0;
+  const contador = document.querySelector("#galeria-contador");
   const setIdx = (i)=>{
     idx = i;
     principal.src = imgs[idx];
     principal.alt = `Foto ${idx+1}`;
     const children = [...thumbs.children];
     children.forEach((el,n)=>el.classList.toggle("active", n===idx));
+    if (contador) contador.textContent = `${idx + 1} / ${imgs.length}`;
     // Auto-scroll para centrar la miniatura activa
     const activeThumb = children[idx];
     if(activeThumb){

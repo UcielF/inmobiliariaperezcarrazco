@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perez Carrazco · Ventas</title>
-  <meta name="description" content="Perez Carrazco Inmobiliaria — Propiedades en venta en Mar del Plata.">
+  <title>Perez Carrazco · Alquiler</title>
+  <meta name="description" content="Perez Carrazco Inmobiliaria — Alquiler permanente en Mar del Plata.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
   <header class="site-header">
     <div class="container nav-container">
       <a href="../../index.html" class="logo-link">
-        <img src="../../logoPC.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
+        <img src="../../data/img/logoblanco.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
       </a>
       <nav class="nav-desktop" aria-label="Menú principal">
         <ul class="nav-list">
@@ -30,8 +30,8 @@
               Servicios <i class="fa-solid fa-chevron-down"></i>
             </button>
             <ul class="submenu">
-              <li><a href="../alquileres/alquileres.html">Alquileres</a></li>
-              <li><a href="../temporarios/temporarios.html">Temporarios</a></li>
+              <li><a href="../venta/venta.html">Venta</a></li>
+              
             </ul>
           </li>
           <li><a href="#contacto">Contacto</a></li>
@@ -44,7 +44,7 @@
     <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
       <ul>
         <li><a href="../../index.html">Home</a></li>
-        <li><a href="../alquileres/alquileres.html">Alquileres</a></li>
+        <li><a href="../ventas/ventas.html">Venta</a></li>
         <li><a href="../temporarios/temporarios.html">Temporarios</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -52,10 +52,10 @@
   </header>
 
   <!-- Hero -->
-  <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades en venta">
+  <section id="inicio" class="hero" role="banner" aria-label="Buscador de alquileres">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>Propiedades en venta</h1>
+      <h1>Busca propiedades en alquiler</h1>
 
       <form id="buscador" class="search-form" autocomplete="off">
         <input type="text" id="q" name="q" placeholder="Barrio, calle o palabra clave…" aria-label="Buscar por texto">
@@ -73,15 +73,15 @@
     </div>
   </section>
 
-  <!-- Listado de ventas -->
+  <!-- Listado de alquileres -->
   <main>
     <section class="section">
       <div class="container">
         <div class="section-head">
-          <h2>Propiedades en venta</h2>
+          <h2>Propiedades en alquiler</h2>
         </div>
-        <!-- data-op="1" → filtra solo ventas en Tokko -->
-        <div id="grid-disponibles" class="disponibles" data-op="1"></div>
+        <!-- data-op="2" → filtra solo alquileres en Tokko -->
+        <div id="grid-disponibles" class="disponibles" data-op="2"></div>
         <div class="center mt-3">
           <button id="ver-mas" class="btn">Ver más propiedades</button>
         </div>
