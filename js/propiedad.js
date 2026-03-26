@@ -308,7 +308,7 @@ function renderGaleria(imgs){
   thumbs.innerHTML = "";
 
   if(!imgs || !imgs.length){
-    principal.src = "img/placeholder.jpg";
+    principal.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3Crect width='800' height='500' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='24' fill='%23aaa' text-anchor='middle' dy='.3em'%3ESin imagen disponible%3C/text%3E%3C/svg%3E";
     principal.alt = "Sin imagen disponible";
     return;
   }
@@ -378,7 +378,7 @@ function renderRelacionadas(actual){
   const grid = document.querySelector("#relacionadas-grid");
   grid.innerHTML = "";
   relacionadas.forEach(p=>{
-    const img0 = (p.imagenes || p.images || [])[0] || "img/placeholder.jpg";
+    const img0 = (p.imagenes || p.images || [])[0] || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3Crect width='800' height='500' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='24' fill='%23aaa' text-anchor='middle' dy='.3em'%3ESin imagen disponible%3C/text%3E%3C/svg%3E";
     const id = encodeURIComponent(String(p.id ?? p.codigo ?? p.slug));
     const a = document.createElement("article");
     a.className = "card";
@@ -423,6 +423,15 @@ function initNav() {
       toggle.querySelector('i').className = 'fa-solid fa-bars';
     }
   }, { passive: true });
+
+  const closeNav = () => {
+    mobileNav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    toggle.querySelector('i').className = 'fa-solid fa-bars';
+  };
+
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 }
 
 function initSubmenus() {
@@ -444,6 +453,15 @@ function initSubmenus() {
   }, { passive: true });
 }
 
+function initBtnTop() {
+  const btn = document.getElementById('btn-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
 /**********************
  * INIT ROBUSTO
  **********************/
@@ -451,16 +469,15 @@ function initSubmenus() {
   $("#anio").textContent = new Date().getFullYear();
   initNav();
   initSubmenus();
+  initBtnTop();
 
   const idParam = getParam("id");
-  console.log("[propiedad] id de la URL:", idParam);
 
   // 1) Intento por sessionStorage (click desde la card)
   try{
     const cached = sessionStorage.getItem("propSel");
     if (cached) {
       const p = JSON.parse(cached);
-      console.log("[propiedad] usando sessionStorage propSel con id:", p?.id || p?.codigo || p?.slug);
       renderProp(p);
       return;
     }
@@ -471,10 +488,8 @@ function initSubmenus() {
   // 1.5) Intento directo a Tokko primero
   if (idParam) {
     try {
-      console.log("[propiedad] buscando en Tokko id:", idParam);
       const rawTokko = await fetchTokkoById(idParam);
       const propTokko = mapTokkoToLocal(rawTokko);
-      console.log("[propiedad] Tokko OK → render");
       renderProp(propTokko);
       return; // corto acá si Tokko resolvió
     } catch (e) {
@@ -485,7 +500,6 @@ function initSubmenus() {
 
   // 2) Fetch al JSON (si existe)
   try{
-    console.log("[propiedad] intentando fetch:", DATA_URL);
     const resp = await fetch(DATA_URL, { cache: "no-store" });
     if(!resp.ok) {
       console.error("[propiedad] error HTTP al cargar JSON:", resp.status, resp.statusText);
@@ -497,11 +511,6 @@ function initSubmenus() {
     // Permitir que el JSON tenga { propiedades: [...] } o directamente [...]
     const all = Array.isArray(data) ? data : (Array.isArray(data?.propiedades) ? data.propiedades : []);
     window.__ALL_PROPS = all; // guardar para relacionadas
-
-    console.log("[propiedad] total propiedades cargadas:", all.length);
-    if(all.length){
-      console.log("[propiedad] ids disponibles (primeros 20):", all.slice(0,20).map(p=>p.id ?? p.codigo ?? p.slug));
-    }
 
     if(!idParam){
       return renderNotFound("Falta el parámetro ?id en la URL.");

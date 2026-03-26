@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data/img/logoblanco.png" type="image/png">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://perezcarrazcoinmobiliaria.com/">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -29,16 +31,17 @@
           <li><a href="#inicio">Buscar</a></li>
           <li class="has-submenu">
             <button class="submenu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-              Servicios <i class="fa-solid fa-chevron-down"></i>
+              Propiedades <i class="fa-solid fa-chevron-down"></i>
             </button>
             <ul class="submenu">
+              <li><a href="#destacadas">Destacadas</a></li>
               <li><a href="servicios/venta/venta.html">Venta</a></li>
               <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
-             
+              <li><a href="contacto.html">Tasaciones</a></li>
             </ul>
           </li>
           <li><a href="#quienes-somos">Quiénes somos</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </nav>
       <div class="nav-socials">
@@ -53,10 +56,12 @@
     <nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
       <ul>
         <li><a href="#inicio">Buscar</a></li>
+        <li><a href="#destacadas">Destacadas</a></li>
         <li><a href="servicios/venta/venta.html">Venta</a></li>
         <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
+        <li><a href="contacto.html">Tasaciones</a></li>
         <li><a href="#quienes-somos">Quiénes somos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
       <div class="nav-mobile-socials">
         <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -143,32 +148,34 @@
 
   <!-- Quiénes somos -->
   <section id="quienes-somos" class="section">
-    <div class="container narrow">
-      <h2>Quiénes somos</h2>
-      <p>
-        Somos <strong>Perez Carrazco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y
-        transparente. Acompañamos a nuestros clientes en cada paso del proceso para que encuentren el lugar ideal.
-      </p>
+    <div class="container quienes-grid">
+      <div class="quienes-texto">
+        <h2>Quiénes somos</h2>
+        <p>
+          Somos <strong>Perez Carrazco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y
+          transparente. Acompañamos a nuestros clientes en cada paso del proceso para que encuentren el lugar ideal.
+        </p>
+      </div>
+      <div class="quienes-foto">
+        <img
+          src="data/img/equipo.jpeg"
+          alt="Vista aérea de Mar del Plata"
+          loading="lazy"
+        >
+      </div>
     </div>
   </section>
 
-  <!-- Contacto -->
-  <section id="contacto" class="section">
-    <div class="container narrow">
-      <h2>Contacto</h2>
-      <p>Completá el formulario y te respondemos a la brevedad.</p>
-      <form class="form-contacto" onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
-        <div class="row">
-          <input type="text" placeholder="Nombre y apellido" required>
-          <input type="email" placeholder="Email" required>
-        </div>
-        <div class="row">
-          <input type="tel" placeholder="Teléfono">
-          <input type="text" placeholder="Asunto">
-        </div>
-        <textarea rows="4" placeholder="Mensaje"></textarea>
-        <button class="btn" type="submit">Enviar</button>
-      </form>
+
+  <!-- Reseñas Google -->
+  <section id="resenas" class="section section-resenas">
+    <div class="container">
+      <div class="section-head">
+        
+        <p class="muted">Reseñas verificadas en Google</p>
+      </div>
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-989776b5-cb78-4549-9f4b-b2a2cf79c8e8" data-elfsight-app-lazy></div>
     </div>
   </section>
 
@@ -195,7 +202,7 @@
           <li><a href="servicios/venta/venta.html">Venta</a></li>
           <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
           <li><a href="#quienes-somos">Quiénes somos</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -210,7 +217,8 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <button id="btn-top" aria-label="Volver arriba"><i class="fa-solid fa-chevron-up"></i></button>
+  <script src="js/app.js" defer></script>
 
 </body>
 </html>

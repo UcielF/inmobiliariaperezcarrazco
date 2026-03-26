@@ -219,6 +219,15 @@ function initStickyHeader() {
   update();
 }
 
+function initBtnTop() {
+  const btn = document.getElementById('btn-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
 // ── Navegación: subheader + submenús ─────────────────────────────────────────
 
 function initNav() {
@@ -245,6 +254,16 @@ function initNav() {
       overlay?.classList.remove('is-open');
     }
   }, { passive: true });
+
+  const closeNav = () => {
+    mobileNav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    toggle.querySelector('i').className = 'fa-solid fa-bars';
+    overlay?.classList.remove('is-open');
+  };
+
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 }
 
 function initSubmenus() {
@@ -306,8 +325,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   initStickyHeader();
   initNav();
   initSubmenus();
+  initBtnTop();
   initReveal();
   initSlider();
+
+  document.querySelector(".form-contacto")?.addEventListener("submit", e => {
+    e.preventDefault();
+    alert("Gracias, te responderemos a la brevedad.");
+    e.target.reset();
+  });
 
   const toggleBtn = document.getElementById('disponibles-toggle');
   const collapse  = document.getElementById('disponibles-collapse');

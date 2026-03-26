@@ -4,25 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Propiedad | Perez Carrazco Inmobiliaria</title>
-
-  <meta name="description" content="Detalle de propiedad en Perez Carrazco Inmobiliaria, Mar del Plata." />
+  <title>Contacto | Perez Carrazco Inmobiliaria</title>
+  <meta name="description" content="Contactate con Perez Carrazco Inmobiliaria en Mar del Plata. Respondemos por email o WhatsApp." />
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Perez Carrazco Inmobiliaria" />
-  <meta property="og:description" content="Detalle de propiedad en Perez Carrazco Inmobiliaria, Mar del Plata." />
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="data/img/logoPC.png" />
+  <link rel="canonical" href="https://perezcarrazcoinmobiliaria.com/contacto.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data/img/logoblanco.png" type="image/png">
 
-  <!-- CSS global -->
   <link rel="stylesheet" href="css/styles.css">
-  <!-- CSS exclusivo de esta página -->
   <link rel="stylesheet" href="css/propiedad.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
@@ -48,7 +41,7 @@
               <li><a href="contacto.html">Tasaciones</a></li>
             </ul>
           </li>
-          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="contacto.html" aria-current="page">Contacto</a></li>
         </ul>
       </nav>
       <div class="nav-socials">
@@ -67,7 +60,7 @@
         <li><a href="servicios/venta/venta.html">Venta</a></li>
         <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
         <li><a href="contacto.html">Tasaciones</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="contacto.html" aria-current="page">Contacto</a></li>
       </ul>
       <div class="nav-mobile-socials">
         <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -77,134 +70,73 @@
     </nav>
   </header>
 
+  <!-- ==================== MAIN ==================== -->
+  <main>
+    <div class="prop-wrapper contacto-wrapper">
+      <h1 class="contacto-titulo">Contacto</h1>
 
-  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
-  <main id="propiedad">
-    <div class="prop-wrapper">
-      <article class="prop-layout">
-
-        <!-- ——— COLUMNA IZQUIERDA: galería + datos ——— -->
-        <div class="prop-main">
-
-          <!-- Galería -->
-          <div class="galeria-wrap">
-            <div class="galeria-principal" aria-label="Galería de imágenes">
-              <!-- Badge de estado (JS lo setea dinámicamente si hace falta) -->
-              <span class="prop-status-badge disponible" id="status-badge">Disponible</span>
-
-              <button class="ctrl prev" aria-label="Imagen anterior">&#8249;</button>
-              <img id="img-principal" src="" alt="" loading="eager" />
-              <button class="ctrl next" aria-label="Imagen siguiente">&#8250;</button>
-
-              <!-- Contador: "3 / 8" -->
-              <div class="galeria-contador" id="galeria-contador">1 / 1</div>
+      <!-- Formulario email -->
+      <div class="prop-info contacto-card">
+        <p class="prop-section-label">
+          <i class="fa-regular fa-envelope"></i> Escribinos por email
+        </p>
+        <form class="form-contacto contacto-form" id="form-email">
+          <div class="contacto-row">
+            <div class="contacto-field">
+              <label for="email-nombre">Nombre y apellido</label>
+              <input id="email-nombre" type="text" placeholder="Nombre y Apellido" required>
             </div>
-            <div class="thumbs" id="thumbs"></div>
-          </div>
-
-          <!-- Info principal -->
-          <div class="prop-info">
-            <h1 id="titulo">Cargando…</h1>
-            <p class="meta" id="meta">
-              <i class="fa-solid fa-location-dot"></i>
-              <span id="meta-texto">Tipo · Barrio · Dirección</span>
-            </p>
-
-            <div class="precio-op">
-              <span class="op-badge" id="operacion">venta</span>
-              <span class="precio" id="precio">U$S —</span>
-            </div>
-
-            <ul class="amenities" id="amenities">
-              <!-- badges dinámicos desde JS -->
-            </ul>
-
-            <div class="acciones">
-              <a id="btn-whatsapp" class="btn primary" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
-              </a>
-              <a id="btn-email" class="btn btn-email" href="contacto.html">
-                <i class="fa-regular fa-envelope"></i> Enviar Mail
-              </a>
-              <button id="btn-compartir" class="btn btn-compartir">
-                <i class="fa-solid fa-share-nodes"></i> Compartir
-              </button>
-            </div>
-
-            <!-- JSON-LD SEO (oculto) -->
-            <script id="ld-json" type="application/ld+json">{}</script>
-          </div>
-
-          <!-- Descripción -->
-          <div class="prop-descripcion">
-            <p class="prop-section-label">Descripción</p>
-            <p id="descripcion">—</p>
-          </div>
-
-          <!-- Características -->
-          <div class="prop-caracteristicas">
-            <p class="prop-section-label">Características</p>
-            <ul id="caracteristicas-list">
-              <!-- li dinámicos desde JS -->
-            </ul>
-          </div>
-
-        </div><!-- /prop-main -->
-
-
-        <!-- ——— SIDEBAR ——— -->
-        <aside class="sidebar">
-
-          <!-- Card precio + CTA -->
-          <div class="sidebar-card">
-            <div class="sidebar-card-header">
-              <div class="precio-lg-label">Precio</div>
-              <div class="precio-lg" id="precio-lg">U$S —</div>
-            </div>
-            <div class="sidebar-card-body">
-              <div class="datos-rapidos" id="datos-rapidos">
-                <!-- items dinámicos -->
-              </div>
-              <div class="sidebar-cta">
-                <a id="btn-whatsapp-side" class="btn primary" target="_blank" rel="noopener">
-                  <i class="fa-brands fa-whatsapp"></i> Consultar ahora
-                </a>
-                <a class="btn btn-email" href="contacto.html">
-                  <i class="fa-regular fa-envelope"></i> Escribir al agente
-                </a>
-              </div>
-              <p class="id-ref">Ref: <strong id="id-ref">—</strong></p>
+            <div class="contacto-field">
+              <label for="email-email">Correo electrónico</label>
+              <input id="email-email" type="email" placeholder="correo@ejemplo.com" required>
             </div>
           </div>
-
-          <!-- Card ubicación -->
-          <div class="sidebar-card-ubicacion">
-            <h3><i class="fa-solid fa-location-dot"></i> Ubicación</h3>
-            <p id="direccion">—</p>
-            <div class="mapa-placeholder">
-              <iframe id="prop-mapa" src="" loading="lazy" title="Ubicación de la propiedad" style="width:100%;height:180px;border:none;border-radius:10px;display:none;"></iframe>
+          <div class="contacto-row">
+            <div class="contacto-field">
+              <label for="email-tel">Teléfono</label>
+              <input id="email-tel" type="tel" placeholder="Sin 0 y sin 15">
+            </div>
+            <div class="contacto-field">
+              <label for="email-asunto">Asunto</label>
+              <input id="email-asunto" type="text" placeholder="Tasación / Consulta">
             </div>
           </div>
+          <div class="contacto-field">
+            <label for="email-mensaje">Mensaje</label>
+            <textarea id="email-mensaje" rows="5" placeholder="Escribí tu consulta acá…"></textarea>
+          </div>
+          <button type="submit" class="btn primary contacto-btn">
+            <i class="fa-regular fa-paper-plane"></i> Enviar mensaje
+          </button>
+        </form>
+      </div>
 
-        </aside>
+      <!-- Formulario WhatsApp -->
+      <div class="prop-info contacto-card">
+        <p class="prop-section-label">
+          <i class="fa-brands fa-whatsapp"></i> Asesoramiento por WhatsApp
+        </p>
+        <form class="contacto-form" id="form-whatsapp">
+          <div class="contacto-field">
+            <label for="wa-nombre">Tu nombre</label>
+            <input id="wa-nombre" type="text" placeholder="Nombre y Apellido" required>
+          </div>
+          <div class="contacto-field">
+            <label for="wa-mensaje">Tu mensaje</label>
+            <textarea id="wa-mensaje" rows="5" placeholder="Hola, me gustaría recibir asesoramiento sobre...">Hola, me gustaría recibir asesoramiento sobre</textarea>
+          </div>
+          <button type="submit" class="btn primary contacto-btn wa-btn">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </button>
+        </form>
 
-      </article>
+      </div>
 
-      <!-- Propiedades relacionadas -->
-      <section class="relacionadas">
-        <h2>Propiedades relacionadas</h2>
-        <div id="relacionadas-grid" class="grid-cards"></div>
-      </section>
     </div>
   </main>
 
-
-
-
-
   <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer">
-    
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Contacto</h3>
@@ -225,7 +157,7 @@
           <li><a href="servicios/venta/venta.html">Venta</a></li>
           <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
           <li><a href="index.html#quienes-somos">Quiénes somos</a></li>
-          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -241,8 +173,16 @@
   </footer>
 
   <button id="btn-top" aria-label="Volver arriba"><i class="fa-solid fa-chevron-up"></i></button>
-  <script src="js/propiedad.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script>
+    document.getElementById('form-whatsapp').addEventListener('submit', e => {
+      e.preventDefault();
+      const nombre  = document.getElementById('wa-nombre').value.trim();
+      const mensaje = document.getElementById('wa-mensaje').value.trim();
+      const texto   = encodeURIComponent(`Hola, soy ${nombre}. ${mensaje}`);
+      window.open(`https://wa.me/542235685409?text=${texto}`, '_blank');
+    });
+  </script>
 
 </body>
-
 </html>

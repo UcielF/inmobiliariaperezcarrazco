@@ -1,5 +1,5 @@
 :root {
-  --bg: #ffffff;
+  --bg: #9e9c895a;
   --text: rgba(0, 0, 0, 0.678);
   --muted: #ffffff;
   --primary: rgba(30, 90, 60, 0.741);
@@ -16,6 +16,7 @@
 
 
 * { box-sizing: border-box; }
+html { scroll-padding-top: 62px; }
 html, body { margin: 0; padding: 0; }
 body {
   font-family: 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -379,7 +380,7 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   border-top: 1px rgba(0, 107, 43, 0.481);
 }
 .nav-mobile.is-open {
-  max-height: 420px;
+  max-height: 600px;
   border-top-color: var(--border);
 }
 .nav-mobile ul { list-style: none; margin: 0; padding: 0.5rem 1.25rem 1rem; }
@@ -1318,3 +1319,64 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   .acciones .btn { min-width: unset; }
 }
 
+
+/* ── Botón "volver arriba" ─────────────────────────────────── */
+#btn-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(30,90,60,0.25);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  color: var(--accent);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+#btn-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#btn-top:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Quiénes somos ─────────────────────────────────────────── */
+.quienes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.quienes-texto h2 { margin-top: 0; }
+
+.quienes-foto img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 768px) {
+  .quienes-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .quienes-foto img { height: 220px; }
+}

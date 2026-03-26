@@ -18,12 +18,8 @@
       "calefaccion: TB",
       "placard a medida"
     ],
-    "imagenes": [
-      "data/img/ventas/falucho2540/falucho2540-0.jpg"
-          
-      
-    ],
-    "portada":"../../data/img/ventas/falucho2540/falucho2540-0.jpg",
+    "imagenes": [],
+    "portada": "",
     "descripcion": "Living al frente con bacón saliente",
     "destacada": true
   },
