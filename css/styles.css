@@ -1,6 +1,6 @@
 :root {
   --bg: #9e9c895a;
-  --text: rgba(0, 0, 0, 0.678);
+  --text: rgba(0, 0, 0, 0.82);
   --muted: #ffffff;
   --primary: rgba(30, 90, 60, 0.741);
   --accent: rgb(30, 90, 60);
@@ -302,22 +302,22 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   top: 100%;
   left: -10px;
   right: -10px;
-  height: 12px;
+  height: 20px;
 }
 
 .submenu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 2px);
   left: 0;
   display: none;
   min-width: 190px;
-  background: rgba(255, 255, 255, 0.848); 
+  background: rgba(255, 255, 255, 0.97);
   border-radius: 12px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
   padding: 0.4rem;
   list-style: none;
   margin: 0;
-  z-index: 2000;
+  z-index: 7000;
 }
 .has-submenu.open > .submenu { display: block; }
 @media (hover: hover) { .has-submenu:hover > .submenu { display: block; } }
@@ -639,7 +639,7 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 }
 .card-meta {
   font-size: 0.875rem;
-  color: #888;
+  color: #555;
   margin: 0 0 1rem;
   flex: 1;
 }
@@ -680,6 +680,61 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   border: 1px solid var(--border); 
   border-radius: 8px; 
   font-size: 1rem;
+}
+
+/* =======================
+   Franja Instagram
+   ======================= */
+.instagram-banner {
+  background: var(--bg);
+  color: #000000;
+  padding: 2.5rem 0;
+}
+
+.instagram-banner__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.instagram-banner__icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.instagram-banner__inner div { flex: 1; }
+
+.instagram-banner__inner h2 {
+  font-family: var(--font-brand);
+  font-size: 1.4rem;
+  margin-bottom: 0.2rem;
+}
+
+.instagram-banner__inner p {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.instagram-banner__btn {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  text-decoration: none;
+  font-family: var(--font-brand);
+  transition: opacity 0.2s;
+}
+
+.instagram-banner__btn:hover { opacity: 0.85;
+  background: var(--accent);
+  color: #fff;
 }
 
 /* =======================
@@ -1045,20 +1100,6 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 
 
 /* === El dropdown debe flotar y tener capa alta === */
-.has-submenu { position: relative; }
-.submenu {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  z-index: 7000;
-  background: rgba(255, 255, 255, 0.97); /* ← fondo explícito, no se pierde */
-  border-radius: 12px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
-  padding: 0.4rem;
-  min-width: 190px;
-  list-style: none;
-  margin: 0;
-}
 
 
 
@@ -1319,6 +1360,57 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   .acciones .btn { min-width: unset; }
 }
 
+
+/* ── Botón WhatsApp flotante ──────────────────────────────── */
+.wa-float {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2rem;
+  z-index: 900;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #505050f1;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(37,211,102,0.6);
+  color: #fff;
+}
+
+/* ── Botón WhatsApp en tarjetas ───────────────────────────── */
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: var(--font-brand);
+  font-weight: 600;
+  background: #25d366;
+  color: #505050f1;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn-wa:hover { 
+  
+  color: #fff; 
+}
 
 /* ── Botón "volver arriba" ─────────────────────────────────── */
 #btn-top {

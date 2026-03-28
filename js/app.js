@@ -3,7 +3,8 @@
    Datos: Tokko Broker vía Cloudflare Worker
    ============================================================ */
 
-const PROXY    = "https://tokko-proxy.tecno-serv00.workers.dev";
+const PROXY         = "https://tokko-proxy.tecno-serv00.workers.dev";
+const WHATSAPP_NUM  = "542235685409";
 const OP_LABEL = { 1: "Venta", 2: "Alquiler", 3: "Temporario" };
 const OP_MAP   = { venta: 1, alquiler: 2, temporario: 3 };
 const ROOT     = window.ROOT_PATH || "";
@@ -58,6 +59,7 @@ function cardHtml(p) {
   const id    = p.id ?? p.property_id;
   const title = escHtml(p.publication_title || p.address || "Propiedad");
   const img   = portada(p);
+  const waMsg = encodeURIComponent(`Hola! Me interesa la propiedad "${p.publication_title || p.address}". ¿Pueden darme más información?`);
 
   return `
     <article class="card">
@@ -71,7 +73,10 @@ function cardHtml(p) {
       <div class="card-body">
         <h3 class="card-title">${title}</h3>
         <p class="card-meta">${metaTexto(p) || "&nbsp;"}</p>
-        <a href="${ROOT}propiedad.html?id=${id}" class="btn-outline">Ver propiedad →</a>
+        <div class="card-actions">
+          <a href="${ROOT}propiedad.html?id=${id}" class="btn-outline">Ver propiedad →</a>
+          <a href="https://wa.me/${WHATSAPP_NUM}?text=${waMsg}" class="btn-wa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar</a>
+        </div>
       </div>
     </article>`;
 }
@@ -309,6 +314,17 @@ function initSlider() {
   update();
 }
 
+function initWaFloat() {
+  const btn = document.createElement("a");
+  btn.href = `https://wa.me/${WHATSAPP_NUM}?text=` + encodeURIComponent("Hola! Entré a su web y quiero consultar sobre una propiedad.");
+  btn.target = "_blank";
+  btn.rel = "noopener";
+  btn.className = "wa-float";
+  btn.setAttribute("aria-label", "Contactar por WhatsApp");
+  btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+  document.body.appendChild(btn);
+}
+
 function initReveal() {
   const els = document.querySelectorAll('.section-head');
   if (!els.length) return;
@@ -326,13 +342,41 @@ document.addEventListener("DOMContentLoaded", async () => {
   initNav();
   initSubmenus();
   initBtnTop();
+  initWaFloat();
   initReveal();
   initSlider();
 
-  document.querySelector(".form-contacto")?.addEventListener("submit", e => {
+  document.querySelector(".form-contacto")?.addEventListener("submit", async e => {
     e.preventDefault();
-    alert("Gracias, te responderemos a la brevedad.");
-    e.target.reset();
+    const form   = e.target;
+    const btn    = form.querySelector("[type=submit]");
+    const nombre  = form.querySelector("#email-nombre")?.value.trim() || "";
+    const email   = form.querySelector("#email-email")?.value.trim() || "";
+    const tel     = form.querySelector("#email-tel")?.value.trim() || "";
+    const asunto  = form.querySelector("#email-asunto")?.value.trim() || "";
+    const mensaje = form.querySelector("#email-mensaje")?.value.trim() || "";
+
+    if (btn) { btn.disabled = true; btn.textContent = "Enviando…"; }
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/contacto@perezcarrazco.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ nombre, email, tel, asunto, mensaje,
+          _subject: `Consulta web: ${asunto || "Sin asunto"}`,
+          _captcha: "false"
+        })
+      });
+      if (!res.ok) throw new Error();
+      if (btn) { btn.textContent = "Mensaje enviado ✓"; }
+      form.reset();
+    } catch {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Enviar mensaje';
+      }
+      alert("Hubo un error al enviar. Por favor, escribinos directamente a contacto@perezcarrazco.com");
+    }
   });
 
   const toggleBtn = document.getElementById('disponibles-toggle');

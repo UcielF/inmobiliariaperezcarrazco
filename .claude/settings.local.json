@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find E:/.trabajoPaginas/perezcarrazcoinmobiliaria -type f \\\\\\(-name *.json -o -name *.xml \\\\\\))",
+      "Bash(grep -n \"index.html#contacto\" \"E:/.trabajoPaginas/perezcarrazcoinmobiliaria\"/**/*.html)"
+    ]
+  }
+}

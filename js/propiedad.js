@@ -473,19 +473,7 @@ function initBtnTop() {
 
   const idParam = getParam("id");
 
-  // 1) Intento por sessionStorage (click desde la card)
-  try{
-    const cached = sessionStorage.getItem("propSel");
-    if (cached) {
-      const p = JSON.parse(cached);
-      renderProp(p);
-      return;
-    }
-  }catch(e){
-    console.warn("[propiedad] no se pudo leer sessionStorage:", e);
-  }
-
-  // 1.5) Intento directo a Tokko primero
+  // 1) Intento directo a Tokko primero
   if (idParam) {
     try {
       const rawTokko = await fetchTokkoById(idParam);
