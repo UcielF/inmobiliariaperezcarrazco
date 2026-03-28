@@ -698,6 +698,18 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   flex-wrap: wrap;
 }
 
+@media (max-width: 600px) {
+  .instagram-banner__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .instagram-banner__inner div { flex: unset; }
+
+  .instagram-banner__btn { width: 100%; text-align: center; }
+}
+
 .instagram-banner__icon {
   font-size: 2.2rem;
   flex-shrink: 0;
@@ -725,14 +737,15 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   color: var(--accent);
   font-weight: 700;
   white-space: nowrap;
-  border-radius: 50px;
+  border-radius: 6px;
   padding: 0.6rem 1.4rem;
   text-decoration: none;
   font-family: var(--font-brand);
   transition: opacity 0.2s;
 }
 
-.instagram-banner__btn:hover { opacity: 0.85;
+.instagram-banner__btn:hover { 
+  opacity: 0.85;
   background: var(--accent);
   color: #fff;
 }
@@ -1376,9 +1389,14 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   display: flex;
   align-items: center;
   justify-content: center;
-  
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+.wa-float.visible {
+  opacity: 1;
+  visibility: visible;
 }
 .wa-float:hover {
   transform: scale(1.1);

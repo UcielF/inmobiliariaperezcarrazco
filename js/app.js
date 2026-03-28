@@ -323,6 +323,9 @@ function initWaFloat() {
   btn.setAttribute("aria-label", "Contactar por WhatsApp");
   btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
   document.body.appendChild(btn);
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
 }
 
 function initReveal() {
