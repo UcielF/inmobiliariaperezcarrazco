@@ -33,7 +33,7 @@
       "addressRegion": "Buenos Aires",
       "addressCountry": "AR"
     },
-    "telephone": "+542235685409",
+    "telephone": "2236239886",
     "email": "contacto@perezcarrazco.com"
   }
   </script>
@@ -42,8 +42,6 @@
 </head>
 
 <body>
-
-
 
   <!-- Header -->
   <header class="site-header">
@@ -62,9 +60,9 @@
               <li><a href="#destacadas">Destacadas</a></li>
               <li><a href="servicios/venta/venta.html">Venta</a></li>
               <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
-              <li><a href="contacto.html">Tasaciones</a></li>
             </ul>
           </li>
+          <li><a href="servicios/tasaciones.html">Tasaciónes</a></li>
           <li><a href="#quienes-somos">Quiénes somos</a></li>
           <li><a href="contacto.html">Contacto</a></li>
         </ul>
@@ -72,7 +70,7 @@
       <div class="nav-socials">
         <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
       <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
@@ -84,24 +82,31 @@
         <li><a href="#destacadas">Destacadas</a></li>
         <li><a href="servicios/venta/venta.html">Venta</a></li>
         <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
-        <li><a href="contacto.html">Tasaciones</a></li>
+        <li><a href="servicios/tasaciones.html">Tasaciones</a></li>
         <li><a href="#quienes-somos">Quiénes somos</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
       <div class="nav-mobile-socials">
         <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades">
+  <section id="inicio" class="hero hero--index" role="banner" aria-label="Buscador de propiedades">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-     <h1>De la búsqueda<br>a la mejor inversión</h1>
-    <p>Asesoramiento inmobiliario de confianza</p>
+     <h1>
+       <span class="hero-word">PEREZ</span> <span class="hero-word">CARRAZCO</span>
+       <span class="hero-sub-wrap">
+         <span class="hero-line-left"></span>
+         <span class="hero-sub-text">inmobiliaria</span>
+         <span class="hero-line-right"></span>
+       </span>
+     </h1>
+    <p>Tradición e Innovación en un mismo lugar</p>
 
       <form id="buscador" class="search-form" autocomplete="off">
         <input type="text" id="q" name="q" placeholder="Barrio, calle o palabra clave…" aria-label="Buscar por texto">
@@ -117,6 +122,14 @@
           <option value="casa">Casa</option>
           <option value="ph">PH</option>
           <option value="local">Local</option>
+        </select>
+        <select id="ambientes" name="ambientes" aria-label="Ambientes">
+          <option value="">Ambientes</option>
+          <option value="1">1 amb.</option>
+          <option value="2">2 amb.</option>
+          <option value="3">3 amb.</option>
+          <option value="4">4 amb.</option>
+          <option value="5">5+</option>
         </select>
         <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0" aria-label="Precio mínimo">
         <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0" aria-label="Precio máximo">
@@ -144,18 +157,9 @@
       <div class="section-head">
         <h2>Propiedades disponibles</h2>
       </div>
-      <button class="disponibles-toggle" id="disponibles-toggle" aria-expanded="false">
-        <span>Ver propiedades</span>
-        <i class="fa-solid fa-chevron-down"></i>
-      </button>
-      <div class="disponibles-collapse" id="disponibles-collapse">
-        <div id="grid-disponibles" class="disponibles"></div>
-        <div class="center mt-3">
-          <button id="ver-mas">Ver más propiedades</button>
-        </div>
-        <div class="ver-todas-wrap">
-          <a href="servicios/venta/venta.html" class="ver-todas-link">Ver todas las propiedades <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
+      <div id="grid-disponibles" class="disponibles" data-preview="3"></div>
+      <div class="center mt-3">
+        <button id="ver-mas" style="display:none">Ver más propiedades</button>
       </div>
     </div>
   </section>
@@ -164,7 +168,6 @@
   <section id="listado" class="section bg-muted">
     <div class="container">
       <div class="section-head">
-        <h2></h2>
         <p id="contadorResultados" class="muted"></p>
       </div>
       <div id="gridResultados" class="grid-cards" aria-live="polite"></div>
@@ -184,7 +187,7 @@
       <div class="quienes-foto">
         <img
           src="data/img/equipo.jpeg"
-          alt="Vista aérea de Mar del Plata"
+          alt="Equipo de Perez Carrazco Inmobiliaria"
           loading="lazy"
         >
       </div>
@@ -223,8 +226,8 @@
       <div class="footer-col">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542235685409" target="_blank" rel="noopener">+54 223 568-5409</a></li>
-          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5492236239886" target="_blank" rel="noopener">+54 9 2236 23-9886</a></li>
+          <li><i class="fa-regular fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#7e1d11100a1f1d0a113e0e1b0c1b041d1f0c0c1f041d11501d1113"><span class="__cf_email__" data-cfemail="93f0fcfde7f2f0e7fcd3e3f6e1f6e9f0f2e1e1f2e9f0fcbdf0fcfe">[email&#160;protected]</span></a></li>
           <li><i class="fa-solid fa-location-dot"></i> Córdoba 1882, Mar del Plata</li>
         </ul>
         <div class="socials">

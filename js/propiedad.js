@@ -1,7 +1,7 @@
 /**********************
  * CONFIG
  **********************/
-const WHATSAPP_NUM = "2235685409"; // sin + ni 0 ni 15
+const WHATSAPP_NUM = "2236239886"; // sin + ni 0 ni 15
 const EMAIL = "contacto@perezcarrazco.com";
 
 const PROXY = "https://tokko-proxy.tecno-serv00.workers.dev";
@@ -409,11 +409,14 @@ function initNav() {
   const toggle = document.querySelector('.nav-toggle');
   const mobileNav = document.getElementById('nav-mobile');
   if (!toggle || !mobileNav) return;
+  const breadcrumb = document.querySelector('.breadcrumb, .breadcrumb-back');
+
   toggle.addEventListener('click', () => {
     const open = mobileNav.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
     toggle.querySelector('i').className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    if (breadcrumb) breadcrumb.style.visibility = open ? 'hidden' : '';
   });
   document.addEventListener('click', e => {
     if (!e.target.closest('.nav-toggle') && !e.target.closest('#nav-mobile')) {
@@ -421,6 +424,7 @@ function initNav() {
       toggle.setAttribute('aria-expanded', 'false');
       mobileNav.setAttribute('aria-hidden', 'true');
       toggle.querySelector('i').className = 'fa-solid fa-bars';
+      if (breadcrumb) breadcrumb.style.visibility = '';
     }
   }, { passive: true });
 
@@ -429,6 +433,7 @@ function initNav() {
     toggle.setAttribute('aria-expanded', 'false');
     mobileNav.setAttribute('aria-hidden', 'true');
     toggle.querySelector('i').className = 'fa-solid fa-bars';
+    if (breadcrumb) breadcrumb.style.visibility = '';
   };
 
   mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));

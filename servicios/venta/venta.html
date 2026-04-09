@@ -27,8 +27,13 @@
 
   <!-- Header -->
   <header class="site-header">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
+      <span class="sep" aria-hidden="true">/</span>
+      <span class="current">Venta</span>
+    </nav>
     <div class="container nav-container">
-      <a href="../../index.html" class="logo-link">
+      <a href="#inicio" class="logo-link">
         <img src="../../data/img/logoblanco.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
       </a>
       <nav class="nav-desktop" aria-label="Menú principal">
@@ -42,16 +47,18 @@
               <li><a href="../../index.html#destacadas">Destacadas</a></li>
               <li><a href="../venta/venta.html" aria-current="page">Venta</a></li>
               <li><a href="../alquiler/alquiler.html">Alquiler</a></li>
-              <li><a href="../../contacto.html">Tasaciones</a></li>
             </ul>
           </li>
+          <li><a href="../tasaciones.html">Tasaciónes</a></li>
           <li><a href="../../contacto.html">Contacto</a></li>
         </ul>
       </nav>
       <div class="nav-socials">
-        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+          aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+          aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
       <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
@@ -63,22 +70,32 @@
         <li><a href="../../index.html#destacadas">Destacadas</a></li>
         <li><a href="../venta/venta.html">Venta</a></li>
         <li><a href="../alquiler/alquiler.html">Alquiler</a></li>
-        <li><a href="../../contacto.html">Tasaciones</a></li>
+        <li><a href="../tasaciones.html">Tasaciones</a></li>
         <li><a href="../../contacto.html">Contacto</a></li>
       </ul>
       <div class="nav-mobile-socials">
-        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+          aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+          aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section id="inicio" class="hero" role="banner" aria-label="Buscador de propiedades en venta">
+  <section id="inicio" class="hero hero--venta" role="banner" aria-label="Buscador de propiedades en venta">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>Propiedades en venta</h1>
+     <h1>
+       <span class="hero-word">Perez</span> <span class="hero-word">Carrazco</span>
+       <span class="hero-sub-wrap">
+         <span class="hero-line-left"></span>
+         <span class="hero-sub-text">Propiedades en Venta</span>
+         <span class="hero-line-right"></span>
+       </span>
+     </h1>
+    <p>De la busqueda a tu mejor inversión</p>
 
       <form id="buscador" class="search-form" autocomplete="off">
         <input type="text" id="q" name="q" placeholder="Barrio, calle o palabra clave…" aria-label="Buscar por texto">
@@ -89,8 +106,10 @@
           <option value="ph">PH</option>
           <option value="local">Local</option>
         </select>
-        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0" aria-label="Precio mínimo">
-        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0" aria-label="Precio máximo">
+        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0"
+          aria-label="Precio mínimo">
+        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0"
+          aria-label="Precio máximo">
         <button type="submit" class="btn">Buscar</button>
       </form>
     </div>
@@ -125,18 +144,22 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    
+
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542235685409" target="_blank" rel="noopener">+54 223 568-5409</a></li>
-          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5492236239886" target="_blank"
+              rel="noopener">+54 9 2236 23-9886</a></li>
+          <li><i class="fa-regular fa-envelope"></i> <a
+              href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
           <li><i class="fa-solid fa-location-dot"></i> Córdoba 1882, Mar del Plata</li>
         </ul>
         <div class="socials">
-          <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+            aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+            aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -152,7 +175,8 @@
       <div class="footer-col">
         <h3>Ubicación Inmobiliaria</h3>
         <div class="footer-map">
-          <iframe src="https://maps.google.com/maps?q=Córdoba+1882,+Mar+del+Plata,+Buenos+Aires,+Argentina&output=embed" loading="lazy" title="Ubicación Perez Carrazco Inmobiliaria"></iframe>
+          <iframe src="https://maps.google.com/maps?q=Córdoba+1882,+Mar+del+Plata,+Buenos+Aires,+Argentina&output=embed"
+            loading="lazy" title="Ubicación Perez Carrazco Inmobiliaria"></iframe>
         </div>
       </div>
     </div>
@@ -165,4 +189,5 @@
   <script src="../../js/app.js" defer></script>
 
 </body>
+
 </html>

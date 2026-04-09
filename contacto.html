@@ -5,13 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contacto | Perez Carrazco Inmobiliaria</title>
-  <meta name="description" content="Contactate con Perez Carrazco Inmobiliaria en Mar del Plata. Respondemos por email o WhatsApp." />
+  <meta name="description"
+    content="Contactate con Perez Carrazco Inmobiliaria en Mar del Plata. Respondemos por email o WhatsApp." />
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://perezcarrazcoinmobiliaria.com/contacto.html">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://perezcarrazcoinmobiliaria.com/contacto.html">
   <meta property="og:title" content="Contacto | Perez Carrazco Inmobiliaria">
-  <meta property="og:description" content="Contactate con Perez Carrazco Inmobiliaria en Mar del Plata. Respondemos por email o WhatsApp.">
+  <meta property="og:description"
+    content="Contactate con Perez Carrazco Inmobiliaria en Mar del Plata. Respondemos por email o WhatsApp.">
   <meta property="og:image" content="https://perezcarrazcoinmobiliaria.com/data/img/logoblanco.png">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -28,9 +30,14 @@
 <body>
 
   <!-- ==================== HEADER ==================== -->
-  <header class="site-header scrolled">
+  <header class="site-header">
+    <nav class="breadcrumb breadcrumb--mobile" aria-label="Ruta de navegación">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
+      <span class="sep" aria-hidden="true">/</span>
+      <span class="current">Contacto</span>
+    </nav>
     <div class="container nav-container">
-      <a href="index.html" class="logo-link">
+      <a href="#inicio" class="logo-link">
         <img src="data/img/logoblanco.png" alt="Perez Carrazco Inmobiliaria" class="logo-img">
       </a>
       <nav class="nav-desktop" aria-label="Menú principal">
@@ -44,14 +51,16 @@
               <li><a href="index.html#destacadas">Destacadas</a></li>
               <li><a href="servicios/venta/venta.html">Venta</a></li>
               <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
-              <li><a href="contacto.html">Tasaciones</a></li>
             </ul>
           </li>
+          <li><a href="servicios/tasaciones.html">Tasaciones</a></li>
       </nav>
       <div class="nav-socials">
-        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+          aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+          aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
       <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
@@ -63,12 +72,14 @@
         <li><a href="index.html#destacadas">Destacadas</a></li>
         <li><a href="servicios/venta/venta.html">Venta</a></li>
         <li><a href="servicios/alquiler/alquiler.html">Alquiler</a></li>
-        <li><a href="contacto.html">Tasaciones</a></li>
+        <li><a href="servicios/tasaciones.html">Tasaciones</a></li>
       </ul>
       <div class="nav-mobile-socials">
-        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tokkobroker.com" target="_blank" rel="noopener" aria-label="Tokko Broker"><i class="fa-solid fa-building"></i></a>
+        <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+          aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+          aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/5492236239886" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </nav>
   </header>
@@ -78,6 +89,29 @@
     <div class="prop-wrapper contacto-wrapper">
       <h1 class="contacto-titulo">Contacto</h1>
 
+      
+      <!-- Formulario WhatsApp -->
+      <div class="prop-info contacto-card">
+        <p class="prop-section-label">
+          <i class="fa-brands fa-whatsapp"></i> Asesoramiento por WhatsApp
+        </p>
+        <form class="contacto-form" id="form-whatsapp">
+          <div class="contacto-field">
+            <label for="wa-nombre">Tu nombre</label>
+            <input id="wa-nombre" type="text" placeholder="Nombre y Apellido" required>
+          </div>
+          <div class="contacto-field">
+            <label for="wa-mensaje">Tu mensaje</label>
+            <textarea id="wa-mensaje" rows="5"
+            placeholder="Hola, me gustaría recibir asesoramiento sobre...">Hola, me gustaría recibir asesoramiento sobre</textarea>
+          </div>
+          <button type="submit" class="btn primary contacto-btn wa-btn">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </button>
+        </form>
+        
+      </div>
+      
       <!-- Formulario email -->
       <div class="prop-info contacto-card">
         <p class="prop-section-label">
@@ -113,28 +147,6 @@
           </button>
         </form>
       </div>
-
-      <!-- Formulario WhatsApp -->
-      <div class="prop-info contacto-card">
-        <p class="prop-section-label">
-          <i class="fa-brands fa-whatsapp"></i> Asesoramiento por WhatsApp
-        </p>
-        <form class="contacto-form" id="form-whatsapp">
-          <div class="contacto-field">
-            <label for="wa-nombre">Tu nombre</label>
-            <input id="wa-nombre" type="text" placeholder="Nombre y Apellido" required>
-          </div>
-          <div class="contacto-field">
-            <label for="wa-mensaje">Tu mensaje</label>
-            <textarea id="wa-mensaje" rows="5" placeholder="Hola, me gustaría recibir asesoramiento sobre...">Hola, me gustaría recibir asesoramiento sobre</textarea>
-          </div>
-          <button type="submit" class="btn primary contacto-btn wa-btn">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-          </button>
-        </form>
-
-      </div>
-
     </div>
   </main>
 
@@ -144,13 +156,17 @@
       <div class="footer-col">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542235685409" target="_blank" rel="noopener">+54 223 568-5409</a></li>
-          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5492236239886" target="_blank"
+              rel="noopener">+54 9 2236 23-9886</a></li>
+          <li><i class="fa-regular fa-envelope"></i> <a
+              href="mailto:contacto@perezcarrazco.com">contacto@perezcarrazco.com</a></li>
           <li><i class="fa-solid fa-location-dot"></i> Córdoba 1882, Mar del Plata</li>
         </ul>
         <div class="socials">
-          <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/perezcarrazco_inmobiliaria" target="_blank" rel="noopener"
+            aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61580411466472" target="_blank" rel="noopener"
+            aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -166,7 +182,8 @@
       <div class="footer-col">
         <h3>Ubicación Inmobiliaria</h3>
         <div class="footer-map">
-          <iframe src="https://maps.google.com/maps?q=Córdoba+1882,+Mar+del+Plata,+Buenos+Aires,+Argentina&output=embed" loading="lazy" title="Ubicación Perez Carrazco Inmobiliaria"></iframe>
+          <iframe src="https://maps.google.com/maps?q=Córdoba+1882,+Mar+del+Plata,+Buenos+Aires,+Argentina&output=embed"
+            loading="lazy" title="Ubicación Perez Carrazco Inmobiliaria"></iframe>
         </div>
       </div>
     </div>
@@ -180,10 +197,10 @@
   <script>
     document.getElementById('form-whatsapp').addEventListener('submit', e => {
       e.preventDefault();
-      const nombre  = document.getElementById('wa-nombre').value.trim();
+      const nombre = document.getElementById('wa-nombre').value.trim();
       const mensaje = document.getElementById('wa-mensaje').value.trim();
-      const texto   = encodeURIComponent(`Hola, soy ${nombre}. ${mensaje}`);
-      window.open(`https://wa.me/542235685409?text=${texto}`, '_blank');
+      const texto = encodeURIComponent(`Hola, soy ${nombre}. ${mensaje}`);
+      window.open(`https://wa.me/5492236239886?text=${texto}`, '_blank');
     });
 
     // Header siempre scrolled (sin hero)
@@ -197,4 +214,5 @@
   </script>
 
 </body>
+
 </html>
