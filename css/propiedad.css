@@ -798,6 +798,38 @@ body {
 }
 
 /* ============================================================
+   SECCIÓN VIDEO YOUTUBE
+   ============================================================ */
+.prop-video-section {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid var(--prop-border);
+}
+
+.prop-video-section > h2 {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--prop-text);
+  margin-bottom: 1.25rem;
+}
+
+.video-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  border-radius: var(--prop-radius);
+  overflow: hidden;
+  background: #000;
+}
+
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ============================================================
    SECCIÓN RELACIONADAS
    ============================================================ */
 .relacionadas {
@@ -816,8 +848,9 @@ body {
 
 #relacionadas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
   gap: 1.25rem;
+  justify-content: center;
 }
 
 /* Cards de relacionadas */

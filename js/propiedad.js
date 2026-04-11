@@ -114,6 +114,22 @@ function mapTokkoToLocal(raw) {
 
   const descripcion = p.description || p.descripcion || "";
 
+  // Video de YouTube — devuelve { embed, link } o null
+  function extractYoutube(pub) {
+    const vids = pub.videos || pub.media?.videos || [];
+    for (const v of vids) {
+      if (typeof v === "string") {
+        if (v.includes("youtube.com") || v.includes("youtu.be"))
+          return { embed: toYoutubeEmbed(v), link: v };
+        continue;
+      }
+      // Tokko provee player_url (embed) y url (link directo)
+      if (v.player_url || v.url)
+        return { embed: v.player_url || toYoutubeEmbed(v.url), link: v.url || v.player_url };
+    }
+    return null;
+  }
+
   // Devolvemos en el formato que ya consume renderProp()
   return {
     id,
@@ -130,7 +146,8 @@ function mapTokkoToLocal(raw) {
     ambientes,
     dormitorios,
     banos,
-    imagenes: extractFotos(p)
+    imagenes: extractFotos(p),
+    youtube: extractYoutube(p)
   };
 }
 
@@ -139,6 +156,23 @@ function mapTokkoToLocal(raw) {
  * UTILES
  **********************/
 const $ = s => document.querySelector(s);
+
+function toYoutubeEmbed(url) {
+  try {
+    const u = new URL(url);
+    // Ya es URL de embed
+    if (u.pathname.startsWith("/embed/")) return url;
+    let id = "";
+    if (u.hostname === "youtu.be") {
+      id = u.pathname.slice(1);
+    } else {
+      id = u.searchParams.get("v") || "";
+    }
+    return id ? `https://www.youtube.com/embed/${id}` : null;
+  } catch {
+    return null;
+  }
+}
 
 function fmtPrecio(n){ 
   if (n === null || n === undefined || n === "") return "Consultar";
@@ -298,6 +332,14 @@ function renderProp(p){
   setOG("og:description", (p.descripcion || p.description || "").slice(0,160));
   if ((p.imagenes || p.images || [])[0]) setOG("og:image", (p.imagenes || p.images)[0]);
 
+  // Video YouTube
+  const videoSection = document.getElementById("prop-video-section");
+  const videoIframe = document.getElementById("prop-video-iframe");
+  if (videoSection && p.youtube?.embed) {
+    videoIframe.src = p.youtube.embed;
+    videoSection.style.display = "";
+  }
+
   // Relacionadas
   renderRelacionadas(p);
 }
@@ -371,30 +413,48 @@ function renderRelacionadas(actual){
   // Si cargamos por fetch, guardamos la lista en window.__ALL_PROPS
   const all = window.__ALL_PROPS || [];
   const relacionadas = all
-    .filter(p => (String(p.id ?? p.codigo ?? p.slug) !== String(actual.id ?? actual.codigo ?? actual.slug))
-      && ( (p.tipo && actual.tipo && p.tipo===actual.tipo) || (p.barrio && actual.barrio && p.barrio===actual.barrio) ))
-    .slice(0,3);
+    .filter(p => {
+      if (String(p.id ?? p.codigo ?? p.slug) === String(actual.id ?? actual.codigo ?? actual.slug)) return false;
+      const mismoAmbientes = actual.ambientes != null && p.ambientes != null && p.ambientes === actual.ambientes;
+      const mismoTipo = p.tipo && actual.tipo && p.tipo === actual.tipo;
+      return mismoAmbientes || mismoTipo;
+    })
+    .sort((a, b) => {
+      // priorizar las que coinciden en ambientes
+      const aMatch = a.ambientes === actual.ambientes ? 0 : 1;
+      const bMatch = b.ambientes === actual.ambientes ? 0 : 1;
+      return aMatch - bMatch;
+    })
+    .slice(0, 3);
 
   const grid = document.querySelector("#relacionadas-grid");
   grid.innerHTML = "";
-  relacionadas.forEach(p=>{
-    const img0 = (p.imagenes || p.images || [])[0] || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3Crect width='800' height='500' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='24' fill='%23aaa' text-anchor='middle' dy='.3em'%3ESin imagen disponible%3C/text%3E%3C/svg%3E";
+  relacionadas.forEach(p => {
+    const img0 = (p.imagenes || p.images || [])[0] || "";
     const id = encodeURIComponent(String(p.id ?? p.codigo ?? p.slug));
-    const a = document.createElement("article");
-    a.className = "card";
-    a.innerHTML = `
-      <a href="propiedad.html?id=${id}">
-        <img src="${img0}" class="thumb" alt="${p.titulo || p.title}" loading="lazy">
+    const titulo = p.titulo || p.title || "Propiedad";
+    const precioTxt = p.precio ? `${(p.moneda || "U$S").trim()} ${fmtPrecio(p.precio)}` : "Consultar";
+    const meta = [p.tipo, p.barrio, p.superficie ? `${p.superficie} m²` : null].filter(Boolean).join(" • ");
+    const badge = p.operacion ? `<span class="badge">${p.operacion}</span>` : "";
+    const waMsg = encodeURIComponent(`Hola, me interesa la propiedad ${p.direccion || ""}, ${titulo}. ¿Está disponible?`);
+    const art = document.createElement("article");
+    art.className = "card";
+    art.innerHTML = `
+      <a href="propiedad.html?id=${id}" class="card-img-wrap">
+        <img src="${img0}" alt="${titulo}" class="card-img" loading="lazy">
+        <div class="card-price-overlay"><span class="card-price">${precioTxt}</span></div>
+        ${badge}
       </a>
-      <div class="body">
-        <div class="mb-2"><span class="op-badge">${p.operacion || ""}</span></div>
-        <h3 class="title">${p.titulo || p.title}</h3>
-        <p class="meta">${[p.tipo, p.barrio, p.superficie ? (p.superficie + " m²") : null].filter(Boolean).join(" • ")}</p>
-        <p class="precio">${p.precio ? `${(p.moneda || "U$S")} ${fmtPrecio(p.precio)}` : "Consultar"}</p>
-        <a href="propiedad.html?id=${id}" class="btn">Ver más</a>
+      <div class="card-body">
+        <h3 class="card-title">${titulo}</h3>
+        <p class="card-meta">${meta || "&nbsp;"}</p>
+        <div class="card-actions">
+          <a href="propiedad.html?id=${id}" class="btn-outline">Ver propiedad →</a>
+          <a href="https://wa.me/54${WHATSAPP_NUM}?text=${waMsg}" class="btn-wa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar</a>
+        </div>
       </div>
     `;
-    grid.appendChild(a);
+    grid.appendChild(art);
   });
 }
 
@@ -481,10 +541,21 @@ function initBtnTop() {
   // 1) Intento directo a Tokko primero
   if (idParam) {
     try {
-      const rawTokko = await fetchTokkoById(idParam);
-      const propTokko = mapTokkoToLocal(rawTokko);
+      const [rawTokko, rawLista] = await Promise.allSettled([
+        fetchTokkoById(idParam),
+        fetch(`${PROXY}/property?page=1&limit=100&ts=${Date.now()}`, { cache: "no-store" }).then(r => r.json())
+      ]);
+
+      if (rawTokko.status === "rejected") throw rawTokko.reason;
+
+      if (rawLista.status === "fulfilled") {
+        const lista = rawLista.value?.objects || rawLista.value?.results || [];
+        window.__ALL_PROPS = lista.map(mapTokkoToLocal);
+      }
+
+      const propTokko = mapTokkoToLocal(rawTokko.value);
       renderProp(propTokko);
-      return; // corto acá si Tokko resolvió
+      return;
     } catch (e) {
       console.warn("[propiedad] Tokko falló o no encontró:", e);
       // sigue el flujo original de JSON local
