@@ -2,12 +2,15 @@ interface Env {
   TOKKO_KEY?: string; // secret
 }
 
-const ALLOWED_ORIGIN = "https://perezcarrazco.com.ar";
+const ALLOWED_ORIGINS = [
+  "https://perezcarrazco.com.ar",
+  "https://ucielf.github.io", // temporal — quitar cuando el dominio esté activo
+];
 
 function corsHeaders(origin: string | null): Record<string, string> {
-  if (origin === ALLOWED_ORIGIN) {
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
     return {
-      "access-control-allow-origin": ALLOWED_ORIGIN,
+      "access-control-allow-origin": origin,
       "access-control-allow-methods": "GET, OPTIONS",
       "access-control-allow-headers": "Content-Type",
     };
