@@ -2,14 +2,25 @@ interface Env {
   TOKKO_KEY?: string; // secret
 }
 
-function json(data: unknown, status = 200, extra: Record<string, string> = {}) {
+const ALLOWED_ORIGIN = "https://perezcarrazco.com.ar";
+
+function corsHeaders(origin: string | null): Record<string, string> {
+  if (origin === ALLOWED_ORIGIN) {
+    return {
+      "access-control-allow-origin": ALLOWED_ORIGIN,
+      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-headers": "Content-Type",
+    };
+  }
+  return {};
+}
+
+function json(data: unknown, status = 200, origin: string | null = null, extra: Record<string, string> = {}) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       "content-type": "application/json",
-      "access-control-allow-origin": "*",
-      "access-control-allow-methods": "GET, OPTIONS",
-      "access-control-allow-headers": "Content-Type",
+      ...corsHeaders(origin),
       ...extra,
     },
   });
@@ -19,15 +30,13 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
+    const origin = request.headers.get("origin");
 
     // CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, {
-        headers: {
-          "access-control-allow-origin": "*",
-          "access-control-allow-methods": "GET, OPTIONS",
-          "access-control-allow-headers": "Content-Type",
-        },
+        status: origin === ALLOWED_ORIGIN ? 204 : 403,
+        headers: corsHeaders(origin),
       });
     }
     if (path === "/") {
@@ -77,9 +86,7 @@ export default {
         headers: {
           "content-type": "application/json",
           "cache-control": "max-age=300",
-          "access-control-allow-origin": "*",
-          "access-control-allow-methods": "GET, OPTIONS",
-          "access-control-allow-headers": "Content-Type",
+          ...corsHeaders(origin),
         },
       });
     }
@@ -124,7 +131,7 @@ export default {
         const starred = (all as Array<Record<string, unknown>>)
           .filter(p => p.is_starred_on_web === true)
           .slice(0, limit);
-        return json({ objects: starred }, r.status, { "cache-control": "max-age=120" });
+        return json({ objects: starred }, r.status, origin, { "cache-control": "max-age=120" });
       }
 
       const body = await r.text();
@@ -133,14 +140,12 @@ export default {
         headers: {
           "content-type": "application/json",
           "cache-control": "max-age=120",
-          "access-control-allow-origin": "*",
-          "access-control-allow-methods": "GET, OPTIONS",
-          "access-control-allow-headers": "Content-Type",
+          ...corsHeaders(origin),
         },
       });
     }
 
-    return new Response("Not Found", { status: 404, headers: { "access-control-allow-origin": "*" } });
+    return new Response("Not Found", { status: 404, headers: corsHeaders(origin) });
   },
 } satisfies ExportedHandler<Env>;
 

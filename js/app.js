@@ -22,11 +22,6 @@ const state = {
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 
-function escHtml(s = "") {
-  return String(s)
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
 
 function portada(p) {
   const front = p?.photos?.find(ph => ph.is_front_cover);
@@ -114,7 +109,6 @@ async function cargarDestacadas() {
       ? items.map(cardHtml).join("")
       : "<p>No hay propiedades destacadas en este momento.</p>";
   } catch (e) {
-    console.error("[app] Error al cargar destacadas:", e);
     grid.innerHTML = "";
   }
 }
@@ -181,7 +175,6 @@ async function cargarDisponibles(append = false) {
       }
     }
   } catch (e) {
-    console.error("[app] Error al cargar propiedades:", e);
     if (!append) grid.innerHTML = "<p>Error al cargar propiedades. Intentá de nuevo.</p>";
   } finally {
     state.loading = false;
@@ -251,6 +244,7 @@ function renderResultados(lista) {
 function initStickyHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
+  if (header.dataset.scrolledAlways !== undefined) { header.classList.add('scrolled'); return; }
   const update = () => header.classList.toggle('scrolled', window.scrollY > 60);
   window.addEventListener('scroll', update, { passive: true });
   update();
@@ -414,48 +408,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (link) sessionStorage.setItem("scrollY", String(window.scrollY));
   });
 
-  // FIX #7: botón de contacto se rehabilita después del éxito
-  document.querySelector(".form-contacto")?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const form = e.target;
-    const btn = form.querySelector("[type=submit]");
-    const nombre = form.querySelector("#email-nombre")?.value.trim() || "";
-    const email = form.querySelector("#email-email")?.value.trim() || "";
-    const tel = form.querySelector("#email-tel")?.value.trim() || "";
-    const asunto = form.querySelector("#email-asunto")?.value.trim() || "";
-    const mensaje = form.querySelector("#email-mensaje")?.value.trim() || "";
-
-    if (btn) { btn.disabled = true; btn.textContent = "Enviando…"; }
-
-    try {
-      const res = await fetch("https://formsubmit.co/ajax/contacto@perezcarrazco.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          nombre, email, tel, asunto, mensaje,
-          _subject: `Consulta web: ${asunto || "Sin asunto"}`,
-          _captcha: "false"
-        })
-      });
-      if (!res.ok) throw new Error();
-      if (btn) { btn.textContent = "Mensaje enviado ✓"; }
-      form.reset();
-      // Rehabilitar el botón después de 4 segundos
-      setTimeout(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Enviar mensaje';
-        }
-      }, 4000);
-    } catch {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Enviar mensaje';
-      }
-      alert("Hubo un error al enviar. Por favor, escribinos directamente a contacto@perezcarrazco.com");
-    }
-  });
-
   const toggleBtn = document.getElementById('disponibles-toggle');
   const collapse = document.getElementById('disponibles-collapse');
   if (toggleBtn && collapse) {
@@ -507,6 +459,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const nombre = document.getElementById('wa-nombre').value.trim();
     const tipo = document.getElementById('wa-tipo').value;
     const direccion = document.getElementById('wa-direccion').value.trim();
+    const ambientes = document.getElementById('wa-ambientes').value.trim();
     const superficie = document.getElementById('wa-superficie').value.trim();
     const operacion = document.getElementById('wa-operacion').value;
     const comentarios = document.getElementById('wa-comentarios').value.trim();
@@ -516,6 +469,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       `*Nombre:* ${nombre}`,
       `*Tipo:* ${tipo}`,
       `*Dirección:* ${direccion}`,
+      ambientes ? `*Ambientes:* ${ambientes}` : null,
       superficie ? `*Superficie:* ${superficie} m²` : null,
       operacion ? `*Operación:* ${operacion}` : null,
       comentarios ? `*Comentarios:* ${comentarios}` : null,

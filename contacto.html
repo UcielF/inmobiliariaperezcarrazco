@@ -30,7 +30,7 @@
 <body>
 
   <!-- ==================== HEADER ==================== -->
-  <header class="site-header">
+  <header class="site-header scrolled" data-scrolled-always>
     <nav class="breadcrumb breadcrumb--mobile" aria-label="Ruta de navegación">
       <a href="index.html"><i class="fa-solid fa-house"></i></a>
       <span class="sep" aria-hidden="true">/</span>
@@ -87,7 +87,8 @@
   <!-- ==================== MAIN ==================== -->
   <main>
     <div class="prop-wrapper contacto-wrapper">
-      <h1 class="contacto-titulo">Contacto</h1>
+      <h1 class="contacto-titulo" style="color: var(--accent); margin-bottom: 0.5rem;">Contacto</h1>
+      <p style="color: #080808d4; margin-bottom: 2rem; font-size: 1.05rem; opacity: 0.8;">Escribinos y te asesoramos.</p>
 
       
       <!-- Formulario WhatsApp -->
@@ -112,41 +113,8 @@
         
       </div>
       
-      <!-- Formulario email -->
-      <div class="prop-info contacto-card">
-        <p class="prop-section-label">
-          <i class="fa-regular fa-envelope"></i> Escribenos por correo
-        </p>
-        <form class="form-contacto contacto-form" id="form-email">
-          <div class="contacto-row">
-            <div class="contacto-field">
-              <label for="email-nombre">Nombre y apellido</label>
-              <input id="email-nombre" name="nombre" type="text" placeholder="Nombre y Apellido" required>
-            </div>
-            <div class="contacto-field">
-              <label for="email-email">Correo electrónico</label>
-              <input id="email-email" name="email" type="email" placeholder="correo@ejemplo.com" required>
-            </div>
-          </div>
-          <div class="contacto-row">
-            <div class="contacto-field">
-              <label for="email-tel">Teléfono</label>
-              <input id="email-tel" name="tel" type="tel" placeholder="Sin 0 y sin 15">
-            </div>
-            <div class="contacto-field">
-              <label for="email-asunto">Asunto</label>
-              <input id="email-asunto" name="asunto" type="text" placeholder="Tasación / Consulta">
-            </div>
-          </div>
-          <div class="contacto-field">
-            <label for="email-mensaje">Mensaje</label>
-            <textarea id="email-mensaje" name="mensaje" rows="5" placeholder="Escribí tu consulta acá…"></textarea>
-          </div>
-          <button type="submit" class="btn btn-email">
-            <i class="fa-regular fa-paper-plane"></i> Enviar mensaje
-          </button>
-        </form>
-      </div>
+      
+      
     </div>
   </main>
 
@@ -193,6 +161,7 @@
   </footer>
 
   <button id="btn-top" aria-label="Volver arriba"><i class="fa-solid fa-chevron-up"></i></button>
+  <script src="js/utils.js" defer></script>
   <script src="js/app.js" defer></script>
   <script>
     document.getElementById('form-whatsapp').addEventListener('submit', e => {
@@ -203,14 +172,6 @@
       window.open(`https://wa.me/5492236239886?text=${texto}`, '_blank');
     });
 
-    // Header siempre scrolled (sin hero)
-    window.addEventListener('load', () => {
-      const header = document.querySelector('.site-header');
-      if (header) {
-        header.classList.add('scrolled');
-        window.addEventListener('scroll', () => header.classList.add('scrolled'), { passive: true });
-      }
-    });
   </script>
 
 </body>

@@ -77,7 +77,7 @@ body {
 
 .site-header .nav-list a,
 .site-header .submenu-toggle {
-  color: var(--primary) !important;
+  color: var(--accent) !important;
 }
 
 .site-header .nav-toggle {
@@ -1035,18 +1035,25 @@ body {
    PÁGINA CONTACTO
    ============================================================ */
 .contacto-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   padding-top: calc(56px + 3rem);
 }
 
+.contacto-wrapper .contacto-card,
+.contacto-wrapper .contacto-titulo,
+.contacto-wrapper > p {
+  width: min(680px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .contacto-titulo {
-  grid-column: 1 / -1;
   font-family: var(--prop-font);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--primary);
+  color: var(--accent);
   margin: 0 0 0.5rem;
 }
 
@@ -1106,11 +1113,6 @@ body {
 
 
 
-@media (max-width: 900px) {
-  .contacto-wrapper {
-    grid-template-columns: 1fr;
-  }
-}
 
 @media (max-width: 640px) {
   .contacto-row {

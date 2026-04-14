@@ -4,6 +4,7 @@
 const WHATSAPP_NUM = "2236239886"; // sin + ni 0 ni 15
 const EMAIL = "contacto@perezcarrazco.com";
 
+
 const PROXY = "https://tokko-proxy.tecno-serv00.workers.dev";
 
 
@@ -200,11 +201,10 @@ function setOG(property, content){
 }
 
 function renderNotFound(reason){
-  console.warn("Propiedad no encontrada:", reason);
   document.querySelector("main").innerHTML = `
     <section class="container" style="padding:2rem 0">
       <h1>Propiedad no encontrada</h1>
-      <p>${reason || "Revisá el enlace o volvé al listado."}</p>
+      <p>${escHtml(reason) || "Revisá el enlace o volvé al listado."}</p>
       <p><a class="btn" href="index.html">Volver al inicio</a></p>
     </section>
   `;
@@ -279,7 +279,7 @@ function renderProp(p){
   pairs.forEach(([k,v])=>{
     if(v || v === 0){
       const li = document.createElement("li");
-      li.innerHTML = `<strong>${k}:</strong> ${v}`;
+      li.innerHTML = `<strong>${escHtml(k)}:</strong> ${escHtml(v)}`;
       car.appendChild(li);
     }
   });
@@ -294,7 +294,7 @@ function renderProp(p){
   ].forEach(([k,v])=>{
     const div = document.createElement("div");
     div.className = "item";
-    div.innerHTML = `<strong>${v}</strong>${k}`;
+    div.innerHTML = `<strong>${escHtml(v)}</strong>${escHtml(k)}`;
     dr.appendChild(div);
   });
 
@@ -435,19 +435,19 @@ function renderRelacionadas(actual){
     const titulo = p.titulo || p.title || "Propiedad";
     const precioTxt = p.precio ? `${(p.moneda || "U$S").trim()} ${fmtPrecio(p.precio)}` : "Consultar";
     const meta = [p.tipo, p.barrio, p.superficie ? `${p.superficie} m²` : null].filter(Boolean).join(" • ");
-    const badge = p.operacion ? `<span class="badge">${p.operacion}</span>` : "";
+    const badge = p.operacion ? `<span class="badge">${escHtml(p.operacion)}</span>` : "";
     const waMsg = encodeURIComponent(`Hola, me interesa la propiedad ${p.direccion || ""}, ${titulo}. ¿Está disponible?`);
     const art = document.createElement("article");
     art.className = "card";
     art.innerHTML = `
-      <a href="propiedad.html?id=${id}" class="card-img-wrap">
-        <img src="${img0}" alt="${titulo}" class="card-img" loading="lazy">
-        <div class="card-price-overlay"><span class="card-price">${precioTxt}</span></div>
+      <a href="propiedad.html?id=${escHtml(String(id))}" class="card-img-wrap">
+        <img src="${escHtml(img0)}" alt="${escHtml(titulo)}" class="card-img" loading="lazy">
+        <div class="card-price-overlay"><span class="card-price">${escHtml(precioTxt)}</span></div>
         ${badge}
       </a>
       <div class="card-body">
-        <h3 class="card-title">${titulo}</h3>
-        <p class="card-meta">${meta || "&nbsp;"}</p>
+        <h3 class="card-title">${escHtml(titulo)}</h3>
+        <p class="card-meta">${escHtml(meta) || "&nbsp;"}</p>
         <div class="card-actions">
           <a href="propiedad.html?id=${id}" class="btn-outline">Ver propiedad →</a>
           <a href="https://wa.me/54${WHATSAPP_NUM}?text=${waMsg}" class="btn-wa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar</a>
@@ -557,7 +557,6 @@ function initBtnTop() {
       renderProp(propTokko);
       return;
     } catch (e) {
-      console.warn("[propiedad] Tokko falló o no encontró:", e);
       // sigue el flujo original de JSON local
     }
   }
@@ -566,7 +565,6 @@ function initBtnTop() {
   try{
     const resp = await fetch(DATA_URL, { cache: "no-store" });
     if(!resp.ok) {
-      console.error("[propiedad] error HTTP al cargar JSON:", resp.status, resp.statusText);
       if (!idParam) return renderNotFound("No se encontró el parámetro ?id y falló la carga de datos.");
       return renderNotFound("No se pudo cargar la base de propiedades.");
     }
@@ -590,7 +588,6 @@ function initBtnTop() {
     renderProp(prop);
     return;
   }catch(e){
-    console.error("[propiedad] error en fetch/parsing:", e);
     // Si llegamos acá y no hay prop, mostrar not found
     return renderNotFound("Error al cargar los datos. Revisá la consola (F12) → Console/Network.");
   }

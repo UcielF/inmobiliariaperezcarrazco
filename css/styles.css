@@ -14,7 +14,7 @@
 
 
 * { box-sizing: border-box; }
-html { scroll-padding-top: 62px; }
+html { scroll-padding-top: 56px; }
 html, body { margin: 0; padding: 0; }
 body {
   font-family: 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -28,7 +28,7 @@ body {
 h1, h2, h3,
 .nav-list a, .submenu-toggle {
   font-family: var(--font-brand);
-  font-weight: 600;           /* similar al grosor del logo */
+  font-weight: 800;           /* similar al grosor del logo */
   letter-spacing: .2px;       /* leve ajuste */
   margin: 0 0 0.5rem;
   color: var(--accent);
@@ -173,9 +173,9 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 .site-header.scrolled .submenu-toggle {
   font-size: 0.68rem;
   letter-spacing: 0.14em;
-  font-weight: 600;
+  font-weight: 700;
   padding: 0.7rem 0.7rem 0.2rem;
-
+  color: var(--accent);
 }
 
 .site-header.scrolled .nav-list > li {
@@ -320,7 +320,7 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--accent);
   text-decoration: none;
   background: transparent;
   border: none;
@@ -645,17 +645,18 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   font-size: 0.95rem;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(20, 20, 20, 0.18);
   backdrop-filter: blur(8px);
   color: #fff;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
 }
-.search-form input::placeholder { color: rgba(255,255,255,0.7); }
+.search-form input::placeholder { color: rgb(255, 255, 255); }
 .search-form select option { background: #8a8a8a8b; color: #000000; }
 .search-form input:focus, .search-form select:focus {
   border-color: rgba(255,255,255,0.7);
   background: rgba(255,255,255,0.25);
+  color: black;
 }
 .btn {
   background: var(--primary); border: none; 
@@ -846,22 +847,6 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 @media (max-width: 900px) { .grid-cards, .disponibles { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 @media (max-width: 560px) { .grid-cards, .disponibles { grid-template-columns: 1fr; } }
 
-/* =======================
-   Contacto
-   ======================= */
-.form-contacto .row { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem; 
-  margin-bottom: 0.8rem; 
-}
-.form-contacto input, .form-contacto textarea {
-  width: 100%; 
-  padding: 0.7rem; 
-  border: 1px solid var(--border); 
-  border-radius: 8px; 
-  font-size: 1rem;
-}
 
 /* =======================
    Franja Instagram
@@ -1088,7 +1073,7 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
   .search-form #tipo { display: block; }
   .search-form #precioMin, .search-form #precioMax { display: none; }
 
-  .form-contacto .row { grid-template-columns: 1fr; }
+
 
   /* Footer mobile */
   .footer-grid {
