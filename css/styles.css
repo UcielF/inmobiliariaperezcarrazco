@@ -1638,21 +1638,39 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 }
 
 /* ── Quiénes somos ─────────────────────────────────────────── */
+.quienes-hero {
+  background: #fff;
+  padding: 4rem 0;
+}
+
 .quienes-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.9fr 1.1fr;
   gap: 3rem;
   align-items: center;
 }
 
-.quienes-texto h2 { margin-top: 0; }
+.quienes-texto h1 {
+  margin-top: 0;
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.quienes-texto p {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 500px;
+}
 
 .quienes-foto img {
   width: 100%;
-  height: 320px;
+  height: 550px;
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .quienes-foto img { height: 450px; }
 }
 
 @media (max-width: 768px) {
@@ -1660,7 +1678,218 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .quienes-foto img { height: 220px; }
+  .quienes-foto img { height: 350px; }
+}
+
+/* ── Nuestro equipo ─────────────────────────────────────────── */
+.equipo { padding: 5rem 0; }
+
+.equipo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.equipo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.equipo-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+  filter: grayscale(0.15) contrast(1.02) saturate(0.95);
+  transition: filter 0.35s ease;
+}
+
+.equipo-card img:hover { filter: none; }
+
+.equipo-card h3 {
+  margin: 1rem 0 0.25rem;
+  color: var(--accent);
+  font-size: 1.15rem;
+}
+
+.equipo-rol {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .equipo { padding: 3rem 0; }
+  .equipo-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .equipo-card img { max-width: 240px; }
+}
+
+/* ── Reseñas ─────────────────────────────────────────── */
+.resenas { padding: 5rem 0; background: #f9f9f6; }
+
+.resenas-resumen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 60px;
+}
+
+.resenas-rating { text-align: center; }
+
+.rating-numero {
+  display: block;
+  font-family: var(--font-brand);
+  font-weight: 800;
+  font-size: 3.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.rating-estrellas {
+  color: #f4b400;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.rating-total {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 8px 0 0;
+}
+
+.btn-google {
+  display: inline-block;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 12px 28px;
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn-google:hover { background: var(--accent); color: #fff; }
+
+.resenas-carrusel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.resenas-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scroll-resenas 40s linear infinite;
+}
+
+@keyframes scroll-resenas {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.resenas-carrusel:hover .resenas-track { animation-play-state: paused; }
+
+.resena-card {
+  width: 380px;
+  flex-shrink: 0;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resena-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resena-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.resena-autor { flex: 1; }
+
+.resena-nombre {
+  font-family: var(--font-brand);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+  margin: 0;
+}
+
+.resena-fecha {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 2px 0 0;
+}
+
+.resena-logo-google {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.resena-estrellas {
+  color: #f4b400;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.resena-texto {
+  line-height: 1.6;
+  color: #444;
+  font-size: 0.9375rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .resena-card { width: 320px; }
+}
+
+@media (max-width: 768px) {
+  .resenas { padding: 3rem 0; }
+  .resenas-resumen { flex-direction: column; gap: 2rem; }
+  .resenas-carrusel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    mask-image: none;
+    -webkit-mask-image: none;
+    scrollbar-width: none;
+  }
+  .resenas-carrusel::-webkit-scrollbar { display: none; }
+  .resenas-track { animation: none; }
+  .resena-card { width: 300px; scroll-snap-align: start; }
 }
 
 

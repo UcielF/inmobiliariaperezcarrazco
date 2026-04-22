@@ -38,7 +38,7 @@ export default {
     // CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, {
-        status: origin === ALLOWED_ORIGIN ? 204 : 403,
+        status: origin !== null && ALLOWED_ORIGINS.includes(origin) ? 204 : 403,
         headers: corsHeaders(origin),
       });
     }
