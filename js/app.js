@@ -99,23 +99,15 @@ async function cargarDestacadas() {
   const grid = document.getElementById("grid-destacadas");
   if (!grid) return;
 
-  grid.innerHTML = "";
+  grid.innerHTML = "<p>Cargando…</p>";
   try {
-    const r = await fetch(`${PROXY}/property?featured=1&limit=12`);
+    const r = await fetch(`${PROXY}/property?featured=1&limit=6`);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const data = await r.json();
     const items = data.objects || data.results || [];
-    if (!items.length) return;
-
-    const html = items.map(cardHtml).join("");
-    // duplicar para loop seamless (igual que reseñas)
-    grid.innerHTML = html + html;
-    // marcar el segundo set como aria-hidden
-    const allCards = grid.querySelectorAll(".card");
-    const half = allCards.length / 2;
-    for (let i = half; i < allCards.length; i++) {
-      allCards[i].setAttribute("aria-hidden", "true");
-    }
+    grid.innerHTML = items.length
+      ? items.map(cardHtml).join("")
+      : "<p>No hay propiedades destacadas en este momento.</p>";
   } catch (e) {
     grid.innerHTML = "";
   }
@@ -420,6 +412,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initReveal();
   initEquipoAnimation();
   initHeroAnimation();
+  initSlider();
 
   // FIX #9: guardar posición de scroll al navegar a una propiedad
   document.addEventListener("click", e => {
@@ -498,6 +491,62 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 });
+
+// ── Auto-scroll magnético en bordes del slider de destacadas ─────────────────
+(function () {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const MAX_SPEED = 8;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const wrap  = document.querySelector(".slider-wrap");
+    const track = document.getElementById("grid-destacadas");
+    if (!wrap || !track) return;
+
+    let velocity = 0;
+    let rafId    = null;
+
+    function loop() {
+      if (velocity === 0) { rafId = null; return; }
+
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      track.scrollLeft = Math.max(0, Math.min(maxScroll, track.scrollLeft + velocity));
+
+      // detener en los extremos
+      if ((velocity < 0 && track.scrollLeft <= 0) ||
+          (velocity > 0 && track.scrollLeft >= maxScroll)) {
+        velocity = 0;
+        rafId = null;
+        return;
+      }
+
+      rafId = requestAnimationFrame(loop);
+    }
+
+    wrap.addEventListener("mousemove", (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const pos  = (e.clientX - rect.left) / rect.width;
+
+      if (pos < 0.2) {
+        velocity = -((0.2 - pos) / 0.2) * MAX_SPEED;
+      } else if (pos > 0.8) {
+        velocity = ((pos - 0.8) / 0.2) * MAX_SPEED;
+      } else {
+        velocity = 0;
+      }
+
+      if (velocity !== 0 && !rafId) {
+        rafId = requestAnimationFrame(loop);
+      }
+    });
+
+    wrap.addEventListener("mouseleave", () => {
+      velocity = 0;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    });
+  });
+}());
 
 // pageshow distingue bfcache de back_forward sin bfcache:
 // - bfcache (event.persisted=true): DOM congelado, estado preservado → solo restaurar scroll
