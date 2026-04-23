@@ -99,15 +99,23 @@ async function cargarDestacadas() {
   const grid = document.getElementById("grid-destacadas");
   if (!grid) return;
 
-  grid.innerHTML = "<p>Cargando…</p>";
+  grid.innerHTML = "";
   try {
-    const r = await fetch(`${PROXY}/property?featured=1&limit=6`);
+    const r = await fetch(`${PROXY}/property?featured=1&limit=12`);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const data = await r.json();
     const items = data.objects || data.results || [];
-    grid.innerHTML = items.length
-      ? items.map(cardHtml).join("")
-      : "<p>No hay propiedades destacadas en este momento.</p>";
+    if (!items.length) return;
+
+    const html = items.map(cardHtml).join("");
+    // duplicar para loop seamless (igual que reseñas)
+    grid.innerHTML = html + html;
+    // marcar el segundo set como aria-hidden
+    const allCards = grid.querySelectorAll(".card");
+    const half = allCards.length / 2;
+    for (let i = half; i < allCards.length; i++) {
+      allCards[i].setAttribute("aria-hidden", "true");
+    }
   } catch (e) {
     grid.innerHTML = "";
   }
@@ -381,12 +389,23 @@ function initHeroAnimation() {
 }
 
 function initReveal() {
-  const els = document.querySelectorAll('.section-head');
+  const els = document.querySelectorAll('.section-head:not(.reveal-left):not(.reveal-right)');
   if (!els.length) return;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.2 });
   els.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
+}
+
+function initEquipoAnimation() {
+  const els = document.querySelectorAll('.equipo .reveal-left, .equipo .reveal-right, .equipo .reveal');
+  if (!els.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      e.target.classList.toggle('visible', e.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => observer.observe(el));
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -399,8 +418,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initBtnTop();
   initWaFloat();
   initReveal();
+  initEquipoAnimation();
   initHeroAnimation();
-  initSlider();
 
   // FIX #9: guardar posición de scroll al navegar a una propiedad
   document.addEventListener("click", e => {
