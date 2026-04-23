@@ -5,6 +5,8 @@ interface Env {
 const ALLOWED_ORIGINS = [
   "https://perezcarrazco.com.ar",
   "https://ucielf.github.io", // temporal — quitar cuando el dominio esté activo
+  "http://127.0.0.1:5500", // para desarrollo local
+  "http://localhost:5500", // para desarrollo local
 ];
 
 function corsHeaders(origin: string | null): Record<string, string> {
