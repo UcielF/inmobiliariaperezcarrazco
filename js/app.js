@@ -329,24 +329,33 @@ function initSubmenus() {
 function initSlider() {
   const track = document.getElementById('grid-destacadas');
   const thumb = document.getElementById('slider-thumb');
+  const btnPrev = document.getElementById('slider-prev');
+  const btnNext = document.getElementById('slider-next');
   if (!track || !thumb) return;
-  const update = () => {
-    // FIX CC-2: evitar división por cero cuando no hay scroll posible
+
+  const SCROLL_STEP = 320;
+
+  const updateThumb = () => {
     const denom = track.scrollWidth - track.clientWidth;
     const ratio = denom > 0 ? track.scrollLeft / denom : 0;
     const thumbW = Math.max(20, (track.clientWidth / track.scrollWidth) * 100);
     thumb.style.width = thumbW + '%';
     thumb.style.left = (ratio * (100 - thumbW)) + '%';
   };
-  track.addEventListener('scroll', update, { passive: true });
-  if (window.matchMedia('(hover: none)').matches) {
-    track.addEventListener('wheel', (e) => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      track.scrollBy({ left: e.deltaY * 2, behavior: 'smooth' });
-    }, { passive: false });
-  }
-  update();
+
+  const updateBtns = () => {
+    if (!btnPrev || !btnNext) return;
+    btnPrev.disabled = track.scrollLeft <= 0;
+    btnNext.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+  };
+
+  track.addEventListener('scroll', () => { updateThumb(); updateBtns(); }, { passive: true });
+
+  btnPrev?.addEventListener('click', () => track.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' }));
+  btnNext?.addEventListener('click', () => track.scrollBy({ left: SCROLL_STEP, behavior: 'smooth' }));
+
+  updateThumb();
+  updateBtns();
 }
 
 function initWaFloat() {
@@ -492,61 +501,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-// ── Auto-scroll magnético en bordes del slider de destacadas ─────────────────
-(function () {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const MAX_SPEED = 8;
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const wrap  = document.querySelector(".slider-wrap");
-    const track = document.getElementById("grid-destacadas");
-    if (!wrap || !track) return;
-
-    let velocity = 0;
-    let rafId    = null;
-
-    function loop() {
-      if (velocity === 0) { rafId = null; return; }
-
-      const maxScroll = track.scrollWidth - track.clientWidth;
-      track.scrollLeft = Math.max(0, Math.min(maxScroll, track.scrollLeft + velocity));
-
-      // detener en los extremos
-      if ((velocity < 0 && track.scrollLeft <= 0) ||
-          (velocity > 0 && track.scrollLeft >= maxScroll)) {
-        velocity = 0;
-        rafId = null;
-        return;
-      }
-
-      rafId = requestAnimationFrame(loop);
-    }
-
-    wrap.addEventListener("mousemove", (e) => {
-      const rect = wrap.getBoundingClientRect();
-      const pos  = (e.clientX - rect.left) / rect.width;
-
-      if (pos < 0.2) {
-        velocity = -((0.2 - pos) / 0.2) * MAX_SPEED;
-      } else if (pos > 0.8) {
-        velocity = ((pos - 0.8) / 0.2) * MAX_SPEED;
-      } else {
-        velocity = 0;
-      }
-
-      if (velocity !== 0 && !rafId) {
-        rafId = requestAnimationFrame(loop);
-      }
-    });
-
-    wrap.addEventListener("mouseleave", () => {
-      velocity = 0;
-      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    });
-  });
-}());
 
 // pageshow distingue bfcache de back_forward sin bfcache:
 // - bfcache (event.persisted=true): DOM congelado, estado preservado → solo restaurar scroll
